@@ -20,6 +20,7 @@ Patch1:		%{name}-FHS.patch
 URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	db-devel
 BuildRequires:	lwp-devel
 BuildRequires:	rvm-devel
 BuildRequires:	rpc2-devel
