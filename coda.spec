@@ -87,7 +87,7 @@ narzêdzia do wolumenów.
 %build
 touch ChangeLog
 #autoheader
-aclocal
+%{__aclocal}
 #autoconf
 #%%configure
 CFLAGS="%{rpmcflags}" CXXFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
