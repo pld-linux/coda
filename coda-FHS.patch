@@ -1,0 +1,313 @@
+diff -Nru coda-5.3.20.orig/coda-src/al/altest.c coda-5.3.20/coda-src/al/altest.c
+--- coda-5.3.20.orig/coda-src/al/altest.c	Fri Jan 25 00:35:46 2002
++++ coda-5.3.20/coda-src/al/altest.c	Fri Feb  7 11:03:40 2003
+@@ -101,7 +101,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/al/pdbtool.c coda-5.3.20/coda-src/al/pdbtool.c
+--- coda-5.3.20.orig/coda-src/al/pdbtool.c	Fri Jan 25 00:35:48 2002
++++ coda-5.3.20/coda-src/al/pdbtool.c	Fri Feb  7 11:02:58 2003
+@@ -811,7 +811,7 @@
+     /* Load server.conf configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/auth2/auth2.c coda-5.3.20/coda-src/auth2/auth2.c
+--- coda-5.3.20.orig/coda-src/auth2/auth2.c	Thu Mar 14 22:23:39 2002
++++ coda-5.3.20/coda-src/auth2/auth2.c	Fri Feb  7 11:07:12 2003
+@@ -130,7 +130,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/norton/norton-reinit.cc coda-5.3.20/coda-src/norton/norton-reinit.cc
+--- coda-5.3.20.orig/coda-src/norton/norton-reinit.cc	Fri May 25 13:48:03 2001
++++ coda-5.3.20/coda-src/norton/norton-reinit.cc	Fri Feb  7 11:16:57 2003
+@@ -909,7 +909,7 @@
+ 	data_len = atoi(argv[4]);
+     }
+ 
+-    vice_dir_init("/vice", 0);
++    vice_dir_init("/var/lib/vice", 0);
+ 
+     if (argc > 8) {
+ 	if (strcmp(argv[7], "skip")) {
+diff -Nru coda-5.3.20.orig/coda-src/norton/norton.cc coda-5.3.20/coda-src/norton/norton.cc
+--- coda-5.3.20.orig/coda-src/norton/norton.cc	Fri May 25 13:48:03 2001
++++ coda-5.3.20/coda-src/norton/norton.cc	Fri Feb  7 11:17:12 2003
+@@ -64,7 +64,7 @@
+ 	exit(1);
+     }
+ 
+-    vice_dir_init("/vice", ServerNumber);
++    vice_dir_init("/var/lib/vice", ServerNumber);
+     NortonInit(argv[0], argv[1], atoi(argv[2]));
+     
+     InitParsing();
+diff -Nru coda-5.3.20.orig/coda-src/portmapper/rpc2portmap.c coda-5.3.20/coda-src/portmapper/rpc2portmap.c
+--- coda-5.3.20.orig/coda-src/portmapper/rpc2portmap.c	Fri Jan 25 00:35:50 2002
++++ coda-5.3.20/coda-src/portmapper/rpc2portmap.c	Fri Feb  7 11:12:36 2003
+@@ -74,7 +74,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/scripts/bldvldb.sh.in coda-5.3.20/coda-src/scripts/bldvldb.sh.in
+--- coda-5.3.20.orig/coda-src/scripts/bldvldb.sh.in	Thu May 18 23:54:39 2000
++++ coda-5.3.20/coda-src/scripts/bldvldb.sh.in	Fri Feb  7 11:11:13 2003
+@@ -27,7 +27,7 @@
+ fi
+ 
+ if [ x${vicedir} = x ] ; then
+-  vicedir=/vice
++  vicedir=/var/lib/vice
+ fi
+ 
+ THISHOST=`hostname | tr A-Z a-z`
+diff -Nru coda-5.3.20.orig/coda-src/scripts/createvol_rep.in coda-5.3.20/coda-src/scripts/createvol_rep.in
+--- coda-5.3.20.orig/coda-src/scripts/createvol_rep.in	Mon May 13 21:55:19 2002
++++ coda-5.3.20/coda-src/scripts/createvol_rep.in	Fri Feb  7 11:10:43 2003
+@@ -29,7 +29,7 @@
+ export PATH
+ 
+ # load the server configuration file
+-vicedir=/vice
++vicedir=/var/lib/vice
+ . "`codaconfedit server.conf`"
+ 
+ if [ ! -f ${vicedir}/hostname -o ! -f ${vicedir}/db/scm ] ; then
+diff -Nru coda-5.3.20.orig/coda-src/scripts/rc.vice.in coda-5.3.20/coda-src/scripts/rc.vice.in
+--- coda-5.3.20.orig/coda-src/scripts/rc.vice.in	Wed Apr 11 15:08:01 2001
++++ coda-5.3.20/coda-src/scripts/rc.vice.in	Fri Feb  7 11:08:48 2003
+@@ -15,7 +15,7 @@
+ fi
+ 
+ if [ x${vicedir} = x ]; then
+-    vicedir=/vice
++    vicedir=/var/lib/vice
+ fi
+ 
+ if [ x${numservers} = x ]; then
+diff -Nru coda-5.3.20.orig/coda-src/scripts/startserver.in coda-5.3.20/coda-src/scripts/startserver.in
+--- coda-5.3.20.orig/coda-src/scripts/startserver.in	Thu May 17 23:26:46 2001
++++ coda-5.3.20/coda-src/scripts/startserver.in	Fri Feb  7 11:09:19 2003
+@@ -29,7 +29,7 @@
+ fi
+ 
+ if [ x${vicedir} = x ]; then
+-  vicedir=/vice
++  vicedir=/var/lib/vice
+ fi
+ 
+ if [ -f ${vicedir}/srv/pid ]; then
+diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-rvm.in coda-5.3.20/coda-src/scripts/vice-setup-rvm.in
+--- coda-5.3.20.orig/coda-src/scripts/vice-setup-rvm.in	Tue Feb 26 23:31:34 2002
++++ coda-5.3.20/coda-src/scripts/vice-setup-rvm.in	Fri Feb  7 11:11:33 2003
+@@ -42,7 +42,7 @@
+ #
+ 
+ # defaults, will be overridden by settings in the server.conf file
+-vicedir=/vice
++vicedir=/var/lib/vice
+ 
+ conf="`codaconfedit server.conf`"
+ if [ "x${conf}" != x/dev/null ] ; then
+diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-scm coda-5.3.20/coda-src/scripts/vice-setup-scm
+--- coda-5.3.20.orig/coda-src/scripts/vice-setup-scm	Tue Feb 26 23:36:11 2002
++++ coda-5.3.20/coda-src/scripts/vice-setup-scm	Fri Feb  7 11:08:21 2003
+@@ -36,7 +36,7 @@
+ . "`codaconfedit server.conf`"
+ 
+ if [ x${vicedir} = x ] ; then
+-  vicedir=/vice
++  vicedir=/var/lib/vice
+ fi
+ 
+ # current first maximum replicated volume id
+diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-srvdir coda-5.3.20/coda-src/scripts/vice-setup-srvdir
+--- coda-5.3.20.orig/coda-src/scripts/vice-setup-srvdir	Tue Mar 12 20:57:09 2002
++++ coda-5.3.20/coda-src/scripts/vice-setup-srvdir	Fri Feb  7 12:48:19 2003
+@@ -28,7 +28,7 @@
+ #
+ # Configuration
+ #
+-vicedir=/vice
++vicedir=/var/lib/vice
+ numservers=1
+ . "`codaconfedit server.conf`"
+ 
+@@ -60,15 +60,15 @@
+     echo
+     
+     if [ $numservers -gt 1 ]; then
+-	echon "Where shall we store your file data for server $n ($bn) [/vicepa]? "
++	echon "Where shall we store your file data for server $n ($bn) [/var/lib/vicepa]? "
+     else
+-	echon 'Where shall we store your file data [/vicepa]? '
++	echon 'Where shall we store your file data [/var/lib/vicepa]? '
+     fi
+     srvdir=
+     read srvdir
+ 
+     if [ "x$srvdir" = x ]; then
+-	srvdir=/vicepa
++	srvdir=/var/lib/vicepa
+     fi
+ 
+     # Create the directory if needed.  (Symlink is OK.)
+diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-user coda-5.3.20/coda-src/scripts/vice-setup-user
+--- coda-5.3.20.orig/coda-src/scripts/vice-setup-user	Tue Feb 26 23:36:12 2002
++++ coda-5.3.20/coda-src/scripts/vice-setup-user	Fri Feb  7 11:10:19 2003
+@@ -31,7 +31,7 @@
+ #
+ # Configuration
+ #
+-vicedir=/vice
++vicedir=/var/lib/vice
+ . "`codaconfedit server.conf`"
+ 
+ # Set up password and group files for Coda
+diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup.in coda-5.3.20/coda-src/scripts/vice-setup.in
+--- coda-5.3.20.orig/coda-src/scripts/vice-setup.in	Tue Mar 12 21:23:30 2002
++++ coda-5.3.20/coda-src/scripts/vice-setup.in	Fri Feb  7 12:46:14 2003
+@@ -106,12 +106,12 @@
+   fi
+ fi
+ 
+-echon "What is the root directory for your coda server(s)? [/vice] "
++echon "What is the root directory for your coda server(s)? [/var/lib/vice] "
+ vicedir=""
+ read vicedir
+ 
+ if [ "x$vicedir" = x ] ; then
+-   vicedir=/vice
++   vicedir=/var/lib/vice
+ fi
+ 
+ if [ $mkconf = 1 ] ; then
+diff -Nru coda-5.3.20.orig/coda-src/update/updateclnt.cc coda-5.3.20/coda-src/update/updateclnt.cc
+--- coda-5.3.20.orig/coda-src/update/updateclnt.cc	Tue Oct 15 18:47:55 2002
++++ coda-5.3.20/coda-src/update/updateclnt.cc	Fri Feb  7 11:13:09 2003
+@@ -335,7 +335,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+     CONF_INT(nservers, "numservers", 1); 
+ 
+     vice_dir_init(vicedir, 0);
+diff -Nru coda-5.3.20.orig/coda-src/update/updatefetch.cc coda-5.3.20/coda-src/update/updatefetch.cc
+--- coda-5.3.20.orig/coda-src/update/updatefetch.cc	Fri Jan 25 00:35:51 2002
++++ coda-5.3.20/coda-src/update/updatefetch.cc	Fri Feb  7 11:13:52 2003
+@@ -89,7 +89,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+     CONF_INT(nservers, "numservers", 1); 
+ 
+     vice_dir_init(vicedir, 0);
+diff -Nru coda-5.3.20.orig/coda-src/update/updatesrv.cc coda-5.3.20/coda-src/update/updatesrv.cc
+--- coda-5.3.20.orig/coda-src/update/updatesrv.cc	Tue Oct 15 18:47:55 2002
++++ coda-5.3.20/coda-src/update/updatesrv.cc	Fri Feb  7 11:13:29 2003
+@@ -119,7 +119,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/vice/printvrdb.cc coda-5.3.20/coda-src/vice/printvrdb.cc
+--- coda-5.3.20.orig/coda-src/vice/printvrdb.cc	Fri Jan 25 00:35:52 2002
++++ coda-5.3.20/coda-src/vice/printvrdb.cc	Fri Feb  7 11:06:10 2003
+@@ -66,7 +66,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/vice/server.conf.ex coda-5.3.20/coda-src/vice/server.conf.ex
+--- coda-5.3.20.orig/coda-src/vice/server.conf.ex	Fri Mar 15 18:35:22 2002
++++ coda-5.3.20/coda-src/vice/server.conf.ex	Fri Feb  7 11:05:44 2003
+@@ -11,7 +11,7 @@
+ #
+ # Prefix of server tree
+ #
+-#vicedir=/vice
++#vicedir=/var/lib/vice
+ 
+ #
+ # Should the server use private mmaps for RVM
+diff -Nru coda-5.3.20.orig/coda-src/vice/srv.cc coda-5.3.20/coda-src/vice/srv.cc
+--- coda-5.3.20.orig/coda-src/vice/srv.cc	Tue May 21 05:36:30 2002
++++ coda-5.3.20/coda-src/vice/srv.cc	Fri Feb  7 11:06:38 2003
+@@ -1346,7 +1346,7 @@
+     CONF_INT(large,		"large",	   500);
+     CONF_INT(small,		"small",	   500);
+ 
+-    CONF_STR(vicedir,		"vicedir",	   "/vice");
++    CONF_STR(vicedir,		"vicedir",	   "/var/lib/vice");
+     vice_dir_init(vicedir, ServerNumber);
+ 
+     CONF_INT(trace,		"trace",	   0);
+diff -Nru coda-5.3.20.orig/coda-src/vol/testvrdb.cc coda-5.3.20/coda-src/vol/testvrdb.cc
+--- coda-5.3.20.orig/coda-src/vol/testvrdb.cc	Fri Jan 12 12:58:31 2001
++++ coda-5.3.20/coda-src/vol/testvrdb.cc	Fri Feb  7 11:05:03 2003
+@@ -103,7 +103,7 @@
+     sprintf (confname, "%s.conf", serverconf);
+     (void) conf_init(confname);
+ 
+-    CONF_STR(vicedir,		"vicedir",	   "/vice");
++    CONF_STR(vicedir,		"vicedir",	   "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/volutil/backup.cc coda-5.3.20/coda-src/volutil/backup.cc
+--- coda-5.3.20.orig/coda-src/volutil/backup.cc	Fri Jan 25 00:35:54 2002
++++ coda-5.3.20/coda-src/volutil/backup.cc	Fri Feb  7 11:14:49 2003
+@@ -176,7 +176,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+ 
+     vice_dir_init(vicedir, 0);
+ }
+diff -Nru coda-5.3.20.orig/coda-src/volutil/volclient.cc coda-5.3.20/coda-src/volutil/volclient.cc
+--- coda-5.3.20.orig/coda-src/volutil/volclient.cc	Fri Jan 25 00:35:54 2002
++++ coda-5.3.20/coda-src/volutil/volclient.cc	Fri Feb  7 11:14:30 2003
+@@ -142,7 +142,7 @@
+     /* Load configuration file to get vice dir. */
+     codaconf_init("server.conf");
+ 
+-    CONF_STR(vicedir, "vicedir", "/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
+     CONF_INT(nservers, "numservers", 1); 
+ 
+     vice_dir_init(vicedir, 0);

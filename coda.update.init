@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# update		
+#
+# chkconfig:	345 95 02
+#
+# description:	The Coda update server and clients
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up
+if is_no "${NETWORKING}"; then
+    msg_network_down update
+    exit 1
+fi
+
+case "$1" in
+    start)
+        # Check if the service is already running?
+	if [ -f /var/lock/subsys/update ]; then
+	    msg_already_running update
+	else
+	    msg_starting update
+	    daemon rpc2portmap
+	    daemon updatesrv
+	    daemon updateclnt -h `cat /vice/db/scm`
+	    RETVAL=$?
+	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/update
+	fi
+        ;;
+    stop)
+        if [ -f /var/lock/subsys/update ]; then
+	    msg_stopping update
+	    killproc rpc2portmap
+	    killproc updatesrv
+	    killproc updateclnt
+	    rm -f /var/lock/subsys/update
+	else
+	    msg_Not_Running update
+	fi
+        ;;
+    restart)
+        $0 stop
+	$0 start
+        ;;
+    *)
+        msg_usage "$0 {start|stop|restart}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+

@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# codasrv		
+#
+# chkconfig:	345 96 01
+#
+# description:	The Coda File Server
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up
+if is_no "${NETWORKING}"; then
+    msg_network_down codasrv
+    exit 1
+fi
+
+case "$1" in
+    start)
+        # Check if the service is already running?
+	if [ -f /var/lock/subsys/codasrv ]; then
+	    msg_already_running codasrv
+	else
+	    msg_starting codasrv
+	    startserver &
+	    RETVAL=$?
+	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/codasrv
+	fi
+        ;;
+    stop)
+        if [ -f /var/lock/subsys/codasrv ]; then
+	    msg_stopping codasrv
+	    volutil shutdown
+	    sleep 30
+	    rm -f /var/lock/subsys/codasrv
+	else
+	    msg_Not_Running codasrv
+	fi
+        ;;
+    restart)
+        $0 stop
+	$0 start
+        ;;
+    *)
+        msg_usage "$0 {start|stop|restart}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+

@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# auth2		
+#
+# chkconfig:	345 95 01
+#
+# description:	The Coda authentication server
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up
+if is_no "${NETWORKING}"; then
+    msg_network_down auth2
+    exit 1
+fi
+
+case "$1" in
+    start)
+        # Check if the service is already running?
+	if [ -f /var/lock/subsys/auth2 ]; then
+	    msg_already_running auth2
+	else
+	    msg_starting auth2
+	    daemon auth2
+	    RETVAL=$?
+	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/auth2
+	fi
+        ;;
+    stop)
+        if [ -f /var/lock/subsys/auth2 ]; then
+	    msg_stopping auth2
+	    killproc auth2
+	    rm -f /var/lock/subsys/auth2
+	else
+	    msg_Not_Running auth2
+	fi
+        ;;
+    restart)
+        $0 stop
+	$0 start
+        ;;
+    *)
+        msg_usage "$0 {start|stop|restart}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+
