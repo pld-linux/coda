@@ -23,21 +23,23 @@ else
 	exit 0
 fi
 
+RETVAL=0
 case "$1" in
   start)
 	# Check if the service is already running?
-	if [ -f /var/lock/subsys/update ]; then
-		msg_already_running update
-		exit 1
-	else
+	if [ ! -f /var/lock/subsys/update ]; then
 		msg_starting rpc2portmap
 		daemon rpc2portmap
+		RETVAL=$?
 		msg_starting updatesrv
 		daemon updatesrv
+		[ RETVAL -eq 0 ] && RETVAL=$?
 		msg_starting updateclnt
 		daemon updateclnt -h `cat /var/lib/vice/db/scm`
-		RETVAL=$?
+		[ RETVAL -eq 0 ] && RETVAL=$?
 		[ RETVAL -eq 0 ] && touch /var/lock/subsys/update
+	else
+		msg_already_running update
 	fi
 	;;
   stop)
@@ -51,18 +53,18 @@ case "$1" in
 		rm -f /var/lock/subsys/update
 	else
 		msg_not_running update
-		exit 1
 	fi
 	;;
   status)
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 	;;
 esac
 

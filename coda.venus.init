@@ -23,20 +23,19 @@ else
 	exit 0
 fi
 
+RETVAL=0
 case "$1" in
 	start)
 	# Check if the service is already running?
-	if [ -f /var/lock/subsys/venus ]; then
-		msg_already_running venus
-		exit 1
-	else
+	if [ ! -f /var/lock/subsys/venus ]; then
 		msg_starting venus
 		busy
 		venus &
-		deltext
-		ok
 		RETVAL=$?
+		ok
 		[ RETVAL -eq 0 ] && touch /var/lock/subsys/venus
+	else
+		msg_already_running venus
 	fi
 	;;
 	stop)
@@ -47,20 +46,19 @@ case "$1" in
 		rm -f /var/lock/subsys/venus
 	else
 		msg_not_running venus
-		exit 1
 	fi
 	;;
   status)
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 	;;
 esac
 
 exit $RETVAL
-

@@ -23,18 +23,18 @@ else
 	exit 0
 fi
 
+RETVAL=0
 case "$1" in
   start)
 	# Check if the service is already running?
-	if [ -f /var/lock/subsys/codasrv ]; then
-		msg_already_running codasrv
-		exit 1
-	else
+	if [ ! -f /var/lock/subsys/codasrv ]; then
 		msg_starting codasrv
 		startserver >/dev/null 2>&1 &
-		ok
 		RETVAL=$?
+		ok
 		[ RETVAL -eq 0 ] && touch /var/lock/subsys/codasrv
+	else
+		msg_already_running codasrv
 	fi
 	;;
   stop)
@@ -48,25 +48,23 @@ case "$1" in
 		while [ -f /var/lib/vice/srv/pid ]; do
 			sleep 1
 		done
-		deltext
 		ok
 		rm -f /var/lock/subsys/codasrv
 	else
 		msg_not_running codasrv
-		exit 1
 	fi
 	;;
   status)
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 	;;
 esac
 
 exit $RETVAL
-
