@@ -1,7 +1,6 @@
 #
 # TODO:
 #   - more FHS-compilant changes (/coda, /usr/coda)
-#   - more cleanings initscripts
 #   - separate some programs to coda-common package
 #
 Summary:	Coda distributed filesystem
@@ -41,11 +40,24 @@ klienta, serwer oraz komponenty do backupu. Nale¿y oddzielnie
 zainstalowaæ modu³ do j±dra (lub mieæ j±dro z obs³ug± Cody), nale¿y
 rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
 
+%package common
+Summary:	Coda filesystem common programs
+Summary(pl):	Wspólne programy dla klienta i serwera systemu plików Coda
+Group:		Networking/Daemons
+
+%description common
+This package contains programs used by server and client.
+
+%description common -l pl
+Ten pakiet zawiera programy u¿ywane przez klienta i serwer systemu plików
+Coda.
+
 %package client
 Summary:	Coda client
 Summary(pl):	Klient Cody
 Group:		Networking/Daemons
 Prereq:		/sbin/chkconfig
+Requires:	coda-common
 
 %description client
 This package contains the main client program, the cachemanager Venus.
@@ -69,6 +81,7 @@ Summary:	Coda server
 Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
 Prereq:		/sbin/chkconfig
+Requires:	coda-common
 
 %description server
 This package contains the fileserver codasrv for the coda filesystem,
@@ -146,6 +159,11 @@ else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
 /sbin/chkconfig --add venus
+if [ -f /var/lock/subsys/venus ]; then
+	/etc/rc.d/init.d/venus restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/venus start\" to start venus." >&2
+fi
 
 %preun client
 grep "^coda" /proc/mounts > /dev/null 2>&1
@@ -156,20 +174,54 @@ else
 	exit 0
 fi
 if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/venus ]; then
+		/etc/rc.d/init.d/venus stop >&2
+	fi
 	/sbin/chkconfig --del venus
 fi
 
 %post server
-/sbin/chkconfig --add update
 /sbin/chkconfig --add auth2
+if [ -f /var/lock/subsys/auth2 ]; then
+	/etc/rc.d/init.d/auth2 restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/auth2 start\" to start auth." >&2
+fi
+/sbin/chkconfig --add update
+if [ -f /var/lock/subsys/update ]; then
+	/etc/rc.d/init.d/update restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/update start\" to start update." >&2
+fi
 /sbin/chkconfig --add codasrv
+if [ -f /var/lock/subsys/codasrv ]; then
+	/etc/rc.d/init.d/codasrv restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/codasrv start\" to start codasrv." >&2
+fi
 
 %preun server
 if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/update ]; then
+		/etc/rc.d/init.d/update stop >&2
+	fi
 	/sbin/chkconfig --del update
+	if [ -f /var/lock/subsys/auth2 ]; then
+		/etc/rc.d/init.d/auth2 stop >&2
+	fi
 	/sbin/chkconfig --del auth2
+	if [ -f /var/lock/subsys/codasrv ]; then
+		/etc/rc.d/init.d/codasrv stop >&2
+	fi
 	/sbin/chkconfig --del codasrv
 fi
+
+%files common
+%defattr(644,root,root,755)
+%dir %{_sysconfdir}/coda
+%attr(755,root,root) %{_sbindir}/codaconfedit
+%attr(755,root,root) %{_sbindir}/coda-setup-ports
+%attr(755,root,root) %{_bindir}/rpc2ping
 
 %files client
 %defattr(644,root,root,755)
@@ -180,11 +232,8 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/venus
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
-%dir %{_sysconfdir}/coda
 %{_sysconfdir}/coda/venus.conf.ex
-%attr(755,root,root) %{_sbindir}/codaconfedit
 %attr(755,root,root) %{_sbindir}/codastart
-%attr(755,root,root) %{_sbindir}/coda-setup-ports
 %attr(755,root,root) %{_sbindir}/pwdtopdbtool.py
 %attr(755,root,root) %{_sbindir}/venus-setup
 %attr(755,root,root) %{_sbindir}/vutil
@@ -204,7 +253,6 @@ fi
 %attr(755,root,root) %{_bindir}/hoard
 %attr(755,root,root) %{_bindir}/spy
 %attr(755,root,root) %{_bindir}/parser
-%attr(755,root,root) %{_bindir}/rpc2ping
 %attr(755,root,root) %{_bindir}/smon2
 %attr(755,root,root) %{_bindir}/filerepair
 %attr(755,root,root) %{_bindir}/removeinc
