@@ -6,7 +6,7 @@ diff -Nru coda-5.3.20.orig/coda-src/al/altest.c coda-5.3.20/coda-src/al/altest.c
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -18,7 +18,7 @@ diff -Nru coda-5.3.20.orig/coda-src/al/pdbtool.c coda-5.3.20/coda-src/al/pdbtool
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -30,7 +30,7 @@ diff -Nru coda-5.3.20.orig/coda-src/auth2/auth2.c coda-5.3.20/coda-src/auth2/aut
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -42,7 +42,7 @@ diff -Nru coda-5.3.20.orig/coda-src/norton/norton-reinit.cc coda-5.3.20/coda-src
      }
  
 -    vice_dir_init("/vice", 0);
-+    vice_dir_init("/var/lib/vice", 0);
++    vice_dir_init("/var/lib/coda/vice", 0);
  
      if (argc > 8) {
  	if (strcmp(argv[7], "skip")) {
@@ -54,7 +54,7 @@ diff -Nru coda-5.3.20.orig/coda-src/norton/norton.cc coda-5.3.20/coda-src/norton
      }
  
 -    vice_dir_init("/vice", ServerNumber);
-+    vice_dir_init("/var/lib/vice", ServerNumber);
++    vice_dir_init("/var/lib/coda/vice", ServerNumber);
      NortonInit(argv[0], argv[1], atoi(argv[2]));
      
      InitParsing();
@@ -66,7 +66,7 @@ diff -Nru coda-5.3.20.orig/coda-src/portmapper/rpc2portmap.c coda-5.3.20/coda-sr
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -78,7 +78,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/bldvldb.sh.in coda-5.3.20/coda-src/s
  
  if [ x${vicedir} = x ] ; then
 -  vicedir=/vice
-+  vicedir=/var/lib/vice
++  vicedir=/var/lib/coda/vice
  fi
  
  THISHOST=`hostname | tr A-Z a-z`
@@ -90,7 +90,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/createvol_rep.in coda-5.3.20/coda-sr
  
  # load the server configuration file
 -vicedir=/vice
-+vicedir=/var/lib/vice
++vicedir=/var/lib/coda/vice
  . "`codaconfedit server.conf`"
  
  if [ ! -f ${vicedir}/hostname -o ! -f ${vicedir}/db/scm ] ; then
@@ -102,7 +102,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/rc.vice.in coda-5.3.20/coda-src/scri
  
  if [ x${vicedir} = x ]; then
 -    vicedir=/vice
-+    vicedir=/var/lib/vice
++    vicedir=/var/lib/coda/vice
  fi
  
  if [ x${numservers} = x ]; then
@@ -114,7 +114,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/startserver.in coda-5.3.20/coda-src/
  
  if [ x${vicedir} = x ]; then
 -  vicedir=/vice
-+  vicedir=/var/lib/vice
++  vicedir=/var/lib/coda/vice
  fi
  
  if [ -f ${vicedir}/srv/pid ]; then
@@ -126,7 +126,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-rvm.in coda-5.3.20/coda-s
  
  # defaults, will be overridden by settings in the server.conf file
 -vicedir=/vice
-+vicedir=/var/lib/vice
++vicedir=/var/lib/coda/vice
  
  conf="`codaconfedit server.conf`"
  if [ "x${conf}" != x/dev/null ] ; then
@@ -138,7 +138,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-scm coda-5.3.20/coda-src/
  
  if [ x${vicedir} = x ] ; then
 -  vicedir=/vice
-+  vicedir=/var/lib/vice
++  vicedir=/var/lib/coda/vice
  fi
  
  # current first maximum replicated volume id
@@ -150,7 +150,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-srvdir coda-5.3.20/coda-s
  # Configuration
  #
 -vicedir=/vice
-+vicedir=/var/lib/vice
++vicedir=/var/lib/coda/vice
  numservers=1
  . "`codaconfedit server.conf`"
  
@@ -159,17 +159,17 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-srvdir coda-5.3.20/coda-s
      
      if [ $numservers -gt 1 ]; then
 -	echon "Where shall we store your file data for server $n ($bn) [/vicepa]? "
-+	echon "Where shall we store your file data for server $n ($bn) [/var/lib/vicepa]? "
++	echon "Where shall we store your file data for server $n ($bn) [/var/lib/coda/vicepa]? "
      else
 -	echon 'Where shall we store your file data [/vicepa]? '
-+	echon 'Where shall we store your file data [/var/lib/vicepa]? '
++	echon 'Where shall we store your file data [/var/lib/coda/vicepa]? '
      fi
      srvdir=
      read srvdir
  
      if [ "x$srvdir" = x ]; then
 -	srvdir=/vicepa
-+	srvdir=/var/lib/vicepa
++	srvdir=/var/lib/coda/vicepa
      fi
  
      # Create the directory if needed.  (Symlink is OK.)
@@ -181,7 +181,7 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup-user coda-5.3.20/coda-src
  # Configuration
  #
 -vicedir=/vice
-+vicedir=/var/lib/vice
++vicedir=/var/lib/coda/vice
  . "`codaconfedit server.conf`"
  
  # Set up password and group files for Coda
@@ -193,13 +193,13 @@ diff -Nru coda-5.3.20.orig/coda-src/scripts/vice-setup.in coda-5.3.20/coda-src/s
  fi
  
 -echon "What is the root directory for your coda server(s)? [/vice] "
-+echon "What is the root directory for your coda server(s)? [/var/lib/vice] "
++echon "What is the root directory for your coda server(s)? [/var/lib/coda/vice] "
  vicedir=""
  read vicedir
  
  if [ "x$vicedir" = x ] ; then
 -   vicedir=/vice
-+   vicedir=/var/lib/vice
++   vicedir=/var/lib/coda/vice
  fi
  
  if [ $mkconf = 1 ] ; then
@@ -211,7 +211,7 @@ diff -Nru coda-5.3.20.orig/coda-src/update/updateclnt.cc coda-5.3.20/coda-src/up
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
      CONF_INT(nservers, "numservers", 1); 
  
      vice_dir_init(vicedir, 0);
@@ -223,7 +223,7 @@ diff -Nru coda-5.3.20.orig/coda-src/update/updatefetch.cc coda-5.3.20/coda-src/u
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
      CONF_INT(nservers, "numservers", 1); 
  
      vice_dir_init(vicedir, 0);
@@ -235,7 +235,7 @@ diff -Nru coda-5.3.20.orig/coda-src/update/updatesrv.cc coda-5.3.20/coda-src/upd
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -247,7 +247,7 @@ diff -Nru coda-5.3.20.orig/coda-src/vice/printvrdb.cc coda-5.3.20/coda-src/vice/
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -259,7 +259,7 @@ diff -Nru coda-5.3.20.orig/coda-src/vice/server.conf.ex coda-5.3.20/coda-src/vic
  # Prefix of server tree
  #
 -#vicedir=/vice
-+#vicedir=/var/lib/vice
++#vicedir=/var/lib/coda/vice
  
  #
  # Should the server use private mmaps for RVM
@@ -271,7 +271,7 @@ diff -Nru coda-5.3.20.orig/coda-src/vice/srv.cc coda-5.3.20/coda-src/vice/srv.cc
      CONF_INT(small,		"small",	   500);
  
 -    CONF_STR(vicedir,		"vicedir",	   "/vice");
-+    CONF_STR(vicedir,		"vicedir",	   "/var/lib/vice");
++    CONF_STR(vicedir,		"vicedir",	   "/var/lib/coda/vice");
      vice_dir_init(vicedir, ServerNumber);
  
      CONF_INT(trace,		"trace",	   0);
@@ -283,7 +283,7 @@ diff -Nru coda-5.3.20.orig/coda-src/vol/testvrdb.cc coda-5.3.20/coda-src/vol/tes
      (void) conf_init(confname);
  
 -    CONF_STR(vicedir,		"vicedir",	   "/vice");
-+    CONF_STR(vicedir,		"vicedir",	   "/var/lib/vice");
++    CONF_STR(vicedir,		"vicedir",	   "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -295,7 +295,7 @@ diff -Nru coda-5.3.20.orig/coda-src/volutil/backup.cc coda-5.3.20/coda-src/volut
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
  
      vice_dir_init(vicedir, 0);
  }
@@ -307,7 +307,7 @@ diff -Nru coda-5.3.20.orig/coda-src/volutil/volclient.cc coda-5.3.20/coda-src/vo
      codaconf_init("server.conf");
  
 -    CONF_STR(vicedir, "vicedir", "/vice");
-+    CONF_STR(vicedir, "vicedir", "/var/lib/vice");
++    CONF_STR(vicedir, "vicedir", "/var/lib/coda/vice");
      CONF_INT(nservers, "numservers", 1); 
  
      vice_dir_init(vicedir, 0);

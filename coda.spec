@@ -144,6 +144,8 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/update
 
 perl -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT/etc/coda/*
 
+mkdir $RPM_BUILD_ROOT/var/lib/coda/vice -p
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -244,7 +246,6 @@ fi
 %attr(755,root,root) %{_sbindir}/venus
 %attr(755,root,root) %{_sbindir}/au
 %attr(755,root,root) %{_bindir}/clog
-#%attr(755,root,root) %{_bindir}/codaconfedit
 %attr(755,root,root) %{_bindir}/coda_replay
 %attr(755,root,root) %{_bindir}/cpasswd
 %attr(755,root,root) %{_bindir}/ctokens
@@ -297,6 +298,7 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/codasrv
 %attr(754,root,root) /etc/rc.d/init.d/auth2
 %attr(754,root,root) /etc/rc.d/init.d/update
+%dir /var/lib/coda/vice
 
 %files backup
 %defattr(644,root,root,755)
