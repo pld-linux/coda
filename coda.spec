@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/usr/coda/venus.cache $RPM_BUILD_ROOT/dev \
 	$RPM_BUILD_ROOT/usr/coda/etc \
 	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d\
-	$RPM_BUILD_ROOT/usr/lib/coda
+	$RPM_BUILD_ROOT%{_libdir}/coda
 
 make client-install
 make server-install
@@ -96,7 +96,7 @@ else
 	/usr/sbin/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
 
-cd /usr/lib/coda
+cd %{_libdir}/coda
 if [ ! -x /usr/bin/tixindex ]; then
 	chmod a+x /usr/bin/tixindex 
 fi
@@ -158,35 +158,35 @@ tixindex *tcl
 /usr/bin/logcmls
 /usr/bin/logreintegration
 /usr/sbin/volmunge
-/usr/lib/coda/Advice.tcl
-/usr/lib/coda/CodaConsole
-/usr/lib/coda/Consider.tcl
-/usr/lib/coda/ConsiderAdding.tcl
-/usr/lib/coda/ConsiderRemoving.tcl
-/usr/lib/coda/ControlPanel.tcl
-/usr/lib/coda/Date.tcl
-/usr/lib/coda/DiscoMiss.tcl
-/usr/lib/coda/Events.tcl
-/usr/lib/coda/Globals.tcl
-/usr/lib/coda/Helper.tcl
-/usr/lib/coda/HoardWalk.tcl
-/usr/lib/coda/HoardWalkAdvice.tcl
-/usr/lib/coda/Indicators.tcl
-/usr/lib/coda/Initialization.tcl
-/usr/lib/coda/Lock.tcl
-/usr/lib/coda/Log.tcl
-/usr/lib/coda/Network.tcl
-/usr/lib/coda/OutsideWorld.tcl
-/usr/lib/coda/ReadMiss.tcl
-/usr/lib/coda/Reconnection.tcl
-/usr/lib/coda/Reintegration.tcl
-/usr/lib/coda/Repair.tcl
-/usr/lib/coda/Space.tcl
-/usr/lib/coda/Task.tcl
-/usr/lib/coda/Timing.tcl
-/usr/lib/coda/Tokens.tcl
-/usr/lib/coda/WeakMiss.tcl
-/usr/lib/coda/tixCodaMeter.tcl
+%{_libdir}/coda/Advice.tcl
+%{_libdir}/coda/CodaConsole
+%{_libdir}/coda/Consider.tcl
+%{_libdir}/coda/ConsiderAdding.tcl
+%{_libdir}/coda/ConsiderRemoving.tcl
+%{_libdir}/coda/ControlPanel.tcl
+%{_libdir}/coda/Date.tcl
+%{_libdir}/coda/DiscoMiss.tcl
+%{_libdir}/coda/Events.tcl
+%{_libdir}/coda/Globals.tcl
+%{_libdir}/coda/Helper.tcl
+%{_libdir}/coda/HoardWalk.tcl
+%{_libdir}/coda/HoardWalkAdvice.tcl
+%{_libdir}/coda/Indicators.tcl
+%{_libdir}/coda/Initialization.tcl
+%{_libdir}/coda/Lock.tcl
+%{_libdir}/coda/Log.tcl
+%{_libdir}/coda/Network.tcl
+%{_libdir}/coda/OutsideWorld.tcl
+%{_libdir}/coda/ReadMiss.tcl
+%{_libdir}/coda/Reconnection.tcl
+%{_libdir}/coda/Reintegration.tcl
+%{_libdir}/coda/Repair.tcl
+%{_libdir}/coda/Space.tcl
+%{_libdir}/coda/Task.tcl
+%{_libdir}/coda/Timing.tcl
+%{_libdir}/coda/Tokens.tcl
+%{_libdir}/coda/WeakMiss.tcl
+%{_libdir}/coda/tixCodaMeter.tcl
 
 %files server	
 /usr/sbin/rvmutl
