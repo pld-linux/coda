@@ -30,7 +30,6 @@ Summary(pl):	Klient Cody
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
-Prereq:		/sbin/chkconfig
 
 %description client
 This package contains the main client program, the cachemanager Venus.
@@ -48,7 +47,6 @@ Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
-Prereq:		/sbin/chkconfig
 
 %description server
 This package contains the fileserver codasrv for the coda filesystem,
@@ -58,8 +56,6 @@ a modified kernel with inode system calls. BEWARE: CVS VERSION
 %package backup
 Summary:	Coda backup coordinator
 Summary(pl):	Program do zarz±dzania backupem Cody
-Prereq:		/sbin/chkconfig
-
 %description backup
 This package contains the backup software for the coda filesystem, as
 well as the volume utilities. BEWARE: CVS VERSION
@@ -123,20 +119,20 @@ if [ -e /usr/coda/etc/vstab ]; then
 else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
-NAME=venus.init; %chkconfig_add
+/sbin/chkconfig --add venus.init
 
-%preun client
-NAME=venus.init; %chkconfig_del
+%postun
+/sbin/chkconfig --del venus.init
 
 %post server
-NAME=update.init; %chkconfig_add
-NAME=auth2.init; DESC=auth2.init; %chkconfig_add
-NAME=codasrv.init; DESC=codasrv.init; %chkconfig_add
+/sbin/chkconfig --add update.init
+/sbin/chkconfig --add auth2.init
+/sbin/chkconfig --add codasrv.init
 
 %postun server
-NAME=update.init; %chkconfig_del
-NAME=auth2.init; %chkconfig_del
-NAME=codasrv.init; %chkconfig_del
+/sbin/chkconfig --del update.init
+/sbin/chkconfig --del auth2.init
+/sbin/chkconfig --del codasrv.init
 
 %files client
 %defattr(644,root,root,755)
