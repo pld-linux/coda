@@ -3,7 +3,7 @@ Summary(pl):	Rozproszony system plików Coda
 Name:		coda
 Version:	5.3.10
 Release:	1
-Copyright:	CMU
+License:	CMU
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
