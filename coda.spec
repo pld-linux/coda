@@ -1,17 +1,16 @@
 #
 # TODO:
-#   - more FHS-compilant changes (/coda, /usr/coda)
 #   - separate some programs to coda-common package
 #
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	5.3.20
+Version:	6.0.1
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	91337387273f1abda9c67d1dd41d1366
+# Source0-md5:	5cdd67264fe89e1859f5a6e25ef259d1
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
@@ -24,6 +23,7 @@ BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	lwp-devel
 BuildRequires:	rvm-devel
+BuildRequires:	rvm-tools
 BuildRequires:	rpc2-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
@@ -119,23 +119,21 @@ narzêdzia do wolumenów.
 touch ChangeLog
 #autoheader
 %{__aclocal}
-#autoconf
-#%%configure
-CFLAGS="%{rpmcflags}" CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions" LDFLAGS="%{rpmldflags}" \
-./configure %{_target_platform} \
-	--prefix=%{_prefix}
+cp /usr/share/automake/config.sub configs/
+autoconf
+%configure
 %{__make} OPTFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache \
+install -d $RPM_BUILD_ROOT%{_localstatedir}/%{name}/venus.cache \
 	$RPM_BUILD_ROOT%{_prefix}/coda%{_sysconfdir} \
-	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d
+	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d \
+	$RPM_BUILD_ROOT/garbage
 
-%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} client-install
-%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} server-install
+%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} exec_prefix=$RPM_BUILD_ROOT${_prefix} libdir=$RPM_BUILD_ROOT%{_libdir} libexecdir=$RPM_BUILD_ROOT${_libexecdir} bindir=$RPM_BUILD_ROOT%{_bindir} sbindir=$RPM_BUILD_ROOT%{_sbindir} mandir=$RPM_BUILD_ROOT%{_mandir} sysconfdir=$RPM_BUILD_ROOT%{_sysconfdir}/%{name} initsuffix=$RPM_BUILD_ROOT/garbage client-install server-install
 
-touch $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache/INIT
+touch $RPM_BUILD_ROOT%{_localstatedir}/%{name}/venus.cache/INIT
 #mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
 touch $RPM_BUILD_ROOT/coda/NOT_REALLY_CODA
 
@@ -143,6 +141,8 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/venus
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/auth2
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/codasrv
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/update
+
+perl -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT/etc/coda/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -157,8 +157,8 @@ else
 fi
 
 %post client
-if [ -e /usr/coda/etc/vstab ]; then
-	touch /usr/coda/venus.cache/INIT
+if [ -e /etc/coda/vstab ]; then
+	touch /var/lib/coda/venus.cache/INIT
 else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
@@ -231,20 +231,20 @@ fi
 %defattr(644,root,root,755)
 %dir %{_prefix}/coda
 %dir %{_prefix}/coda%{_sysconfdir}
-%dir %{_prefix}/coda/venus.cache
-%verify() %{_prefix}/coda/venus.cache/INIT
+%dir %{_localstatedir}/%{name}/venus.cache
+%verify() %{_localstatedir}/%{name}/venus.cache/INIT
 %attr(754,root,root) /etc/rc.d/init.d/venus
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
 %{_sysconfdir}/coda/venus.conf.ex
 %attr(755,root,root) %{_sbindir}/codastart
-%attr(755,root,root) %{_sbindir}/pwdtopdbtool.py
+#%attr(755,root,root) %{_sbindir}/pwdtopdbtool.py
 %attr(755,root,root) %{_sbindir}/venus-setup
 %attr(755,root,root) %{_sbindir}/vutil
 %attr(755,root,root) %{_sbindir}/venus
 %attr(755,root,root) %{_sbindir}/au
 %attr(755,root,root) %{_bindir}/clog
-%attr(755,root,root) %{_bindir}/codaconfedit
+#%attr(755,root,root) %{_bindir}/codaconfedit
 %attr(755,root,root) %{_bindir}/coda_replay
 %attr(755,root,root) %{_bindir}/cpasswd
 %attr(755,root,root) %{_bindir}/ctokens
