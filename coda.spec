@@ -78,7 +78,9 @@ Summary:	Coda backup coordinator
 Summary(pl):	Program do zarz±dzania backupem Cody
 Group:		Networking
 Group(de):	Netzwerkwesen
+Group(es):	Red
 Group(pl):	Sieciowe
+Group(pt_BR):	Rede
 
 %description backup
 This package contains the backup software for the coda filesystem, as
