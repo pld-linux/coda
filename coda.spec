@@ -1,12 +1,23 @@
+#
+# TODO:
+#   - more FHS-compilant changes (/coda, /usr/coda)
+#   - more cleanings initscripts
+#   - separate some programs to coda-common package
+#
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	5.3.10
+Version:	5.3.20
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
+Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
+Source1:	%{name}.venus.init
+Source2:	%{name}.auth2.init
+Source3:	%{name}.codasrv.init
+Source4:	%{name}.update.init
 Patch0:		%{name}-ugly-common.patch
+Patch1:		%{name}-FHS.patch
 URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -85,6 +96,7 @@ narzêdzia do wolumenów.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 touch ChangeLog
@@ -110,6 +122,11 @@ touch $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache/INIT
 #mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
 touch $RPM_BUILD_ROOT/coda/NOT_REALLY_CODA
 
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/venus
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/auth2
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/codasrv
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/update
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -128,7 +145,7 @@ if [ -e /usr/coda/etc/vstab ]; then
 else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
-/sbin/chkconfig --add venus.init
+/sbin/chkconfig --add venus
 
 %preun client
 grep "^coda" /proc/mounts > /dev/null 2>&1
@@ -139,19 +156,19 @@ else
 	exit 0
 fi
 if [ "$1" = "0" ]; then
-	/sbin/chkconfig --del venus.init
+	/sbin/chkconfig --del venus
 fi
 
 %post server
-/sbin/chkconfig --add update.init
-/sbin/chkconfig --add auth2.init
-/sbin/chkconfig --add codasrv.init
+/sbin/chkconfig --add update
+/sbin/chkconfig --add auth2
+/sbin/chkconfig --add codasrv
 
 %preun server
 if [ "$1" = "0" ]; then
-	/sbin/chkconfig --del update.init
-	/sbin/chkconfig --del auth2.init
-	/sbin/chkconfig --del codasrv.init
+	/sbin/chkconfig --del update
+	/sbin/chkconfig --del auth2
+	/sbin/chkconfig --del codasrv
 fi
 
 %files client
@@ -160,14 +177,22 @@ fi
 %dir %{_prefix}/coda%{_sysconfdir}
 %dir %{_prefix}/coda/venus.cache
 %verify() %{_prefix}/coda/venus.cache/INIT
-%attr(754,root,root) /etc/rc.d/init.d/venus.init
+%attr(754,root,root) /etc/rc.d/init.d/venus
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
+%dir %{_sysconfdir}/coda
+%{_sysconfdir}/coda/venus.conf.ex
+%attr(755,root,root) %{_sbindir}/codaconfedit
+%attr(755,root,root) %{_sbindir}/codastart
+%attr(755,root,root) %{_sbindir}/coda-setup-ports
+%attr(755,root,root) %{_sbindir}/pwdtopdbtool.py
 %attr(755,root,root) %{_sbindir}/venus-setup
 %attr(755,root,root) %{_sbindir}/vutil
 %attr(755,root,root) %{_sbindir}/venus
 %attr(755,root,root) %{_sbindir}/au
 %attr(755,root,root) %{_bindir}/clog
+%attr(755,root,root) %{_bindir}/codaconfedit
+%attr(755,root,root) %{_bindir}/coda_replay
 %attr(755,root,root) %{_bindir}/cpasswd
 %attr(755,root,root) %{_bindir}/ctokens
 %attr(755,root,root) %{_bindir}/cunlog
@@ -175,10 +200,12 @@ fi
 %attr(755,root,root) %{_bindir}/cmon
 %attr(755,root,root) %{_bindir}/codacon
 %attr(755,root,root) %{_bindir}/cfs
+%attr(755,root,root) %{_bindir}/getvolinfo
 %attr(755,root,root) %{_bindir}/hoard
 %attr(755,root,root) %{_bindir}/spy
-%attr(755,root,root) %{_bindir}/replay
 %attr(755,root,root) %{_bindir}/parser
+%attr(755,root,root) %{_bindir}/rpc2ping
+%attr(755,root,root) %{_bindir}/smon2
 %attr(755,root,root) %{_bindir}/filerepair
 %attr(755,root,root) %{_bindir}/removeinc
 %attr(755,root,root) %{_bindir}/xfrepair
@@ -187,9 +214,11 @@ fi
 
 %files server
 %defattr(644,root,root,755)
+%{_sysconfdir}/coda/server.conf.ex
 %attr(755,root,root) %{_sbindir}/startserver
 %attr(755,root,root) %{_sbindir}/partial-reinit.sh
 %attr(755,root,root) %{_sbindir}/createvol_rep
+%attr(755,root,root) %{_sbindir}/pdbtool
 %attr(755,root,root) %{_sbindir}/purgevol
 %attr(755,root,root) %{_sbindir}/purgevol_rep
 %attr(755,root,root) %{_sbindir}/bldvldb.sh
@@ -213,9 +242,9 @@ fi
 %attr(755,root,root) %{_bindir}/norton
 %attr(755,root,root) %{_bindir}/norton-reinit
 %attr(755,root,root) %{_bindir}/reinit
-%attr(754,root,root) /etc/rc.d/init.d/codasrv.init
-%attr(754,root,root) /etc/rc.d/init.d/auth2.init
-%attr(754,root,root) /etc/rc.d/init.d/update.init
+%attr(754,root,root) /etc/rc.d/init.d/codasrv
+%attr(754,root,root) /etc/rc.d/init.d/auth2
+%attr(754,root,root) /etc/rc.d/init.d/update
 
 %files backup
 %defattr(644,root,root,755)
