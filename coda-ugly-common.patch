@@ -1,0 +1,46 @@
+diff -Naur coda-ori/coda-src/vtools/cmon.cc coda/coda-src/vtools/cmon.cc
+--- coda-ori/coda-src/vtools/cmon.cc	Wed Jul 26 18:38:07 2000
++++ coda/coda-src/vtools/cmon.cc	Wed Nov 15 20:53:10 2000
+@@ -45,7 +45,7 @@
+ #include <errno.h>
+ 
+ #ifdef	__linux__
+-#include <ncurses.h>
++#include <ncurses/ncurses.h>
+ #else
+ #include <curses.h>
+ #endif
+diff -Naur coda-ori/configs/coda_macros.m4 coda/configs/coda_macros.m4
+--- coda-ori/configs/coda_macros.m4	Fri Oct  6 16:39:08 2000
++++ coda/configs/coda_macros.m4	Wed Nov 15 20:53:47 2000
+@@ -94,7 +94,7 @@
+ dnl cannot be replicated.
+ AC_SUBST(LIBDB)
+ AC_DEFUN(CODA_CHECK_LIBDB185,
+-  AC_CHECK_LIB(db, dbopen, [LIBDB="-ldb"],
++  AC_CHECK_LIB(db, db_version, [LIBDB="-ldb"],
+     [AC_CHECK_LIB(c, dbopen, [LIBDB=""],
+        [AC_CHECK_LIB(c, dbm_open, [],
+           [if test $target != i386-pc-djgpp ; then
+diff -Naur coda-ori/lib-src/special-includes/coda_db.h coda/lib-src/special-includes/coda_db.h
+--- coda-ori/lib-src/special-includes/coda_db.h	Tue Sep 14 21:02:43 1999
++++ coda/lib-src/special-includes/coda_db.h	Wed Nov 15 20:52:19 2000
+@@ -19,12 +19,18 @@
+ #ifndef CODA_DB_H
+ #define CODA_DB_H
+ 
++#ifndef CLEAN_WAY_NOT_UGLY_DB3_HACK
++#define DB_DBM_HSEARCH 1
++#include <db.h>
++#define HAVE_NDBM
++#else 
+ #ifdef HAVE_NDBM
+ #include <ndbm.h>
+ #elif defined(HAVE_DB_185_H)
+ #include <db_185.h>
+ #else
+ #include <db.h>
++#endif
+ #endif
+ 
+ #ifdef HAVE_NDBM
