@@ -70,8 +70,8 @@ install -d $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache $RPM_BUILD_ROOT/dev \
 	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d\
 	$RPM_BUILD_ROOT%{_libdir}/coda
 
-make client-install
-make server-install
+%{__make} client-install
+%{__make} server-install
 
 touch $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache/INIT
 mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
