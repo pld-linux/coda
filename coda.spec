@@ -21,6 +21,7 @@ URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	db-devel
+BuildRequires:	e2fsprogs-devel >= 1.34
 BuildRequires:	lwp-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
@@ -239,6 +240,8 @@ fi
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
 %{_sysconfdir}/coda/venus.conf.ex
+%{_sysconfdir}/coda/sidekick.intr.ex
+%config %{_sysconfdir}/coda/realms
 %attr(755,root,root) %{_sbindir}/codastart
 #%attr(755,root,root) %{_sbindir}/pwdtopdbtool.py
 %attr(755,root,root) %{_sbindir}/venus-setup
@@ -264,6 +267,10 @@ fi
 %attr(755,root,root) %{_bindir}/xfrepair
 %attr(755,root,root) %{_bindir}/xaskuser
 %attr(755,root,root) %{_sbindir}/volmunge
+%attr(755,root,root) %{_sbindir}/sidekick
+%attr(755,root,root) %{_sbindir}/coda-client-logrotate
+%attr(755,root,root) %{_bindir}/mklka
+
 
 %files server
 %defattr(644,root,root,755)
@@ -292,6 +299,7 @@ fi
 %attr(755,root,root) %{_sbindir}/updatesrv
 %attr(755,root,root) %{_sbindir}/updateclnt
 %attr(755,root,root) %{_sbindir}/updatefetch
+%attr(755,root,root) %{_sbindir}/coda-server-logrotate
 %attr(755,root,root) %{_bindir}/norton
 %attr(755,root,root) %{_bindir}/norton-reinit
 %attr(755,root,root) %{_bindir}/reinit
