@@ -5,8 +5,6 @@ Version:	5.3.10
 Release:	1
 License:	CMU
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Patch0:		%{name}-ugly-common.patch
 URL:		http://www.coda.cs.cmu.edu/
@@ -34,8 +32,6 @@ rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
 Summary:	Coda client
 Summary(pl):	Klient Cody
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Prereq:		/sbin/chkconfig
 
 %description client
@@ -59,8 +55,6 @@ aktywno¶ci Cody. Pakiet wymaga Cody w kernelu lub module kernela.
 Summary:	Coda server
 Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Prereq:		/sbin/chkconfig
 
 %description server
@@ -77,10 +71,6 @@ zmodyfikowany kernel z wywo³aniami dotycz±cymi inodów.
 Summary:	Coda backup coordinator
 Summary(pl):	Program do zarz±dzania backupem Cody
 Group:		Networking
-Group(de):	Netzwerkwesen
-Group(es):	Red
-Group(pl):	Sieciowe
-Group(pt_BR):	Rede
 
 %description backup
 This package contains the backup software for the coda filesystem, as
