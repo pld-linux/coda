@@ -31,6 +31,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpc2-devel
 BuildRequires:	rvm-devel
 BuildRequires:	rvm-tools
+BuildRequires:	yacc
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
