@@ -5,18 +5,18 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.3
+Version:	6.0.5
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	86af6c30582724a9899e39791a20435f
+# Source0-md5:	84518dd123274cabc2aaee7cc5cb4c8d
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
 Source4:	%{name}.update.init
 Patch0:		%{name}-ugly-common.patch
-Patch1:		%{name}-FHS.patch
+#Patch1:		%{name}-FHS.patch
 URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -115,12 +115,12 @@ narzêdzia do wolumenów.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
 touch ChangeLog
 #autoheader
-%{__aclocal}
+#%{__aclocal}
 cp /usr/share/automake/config.sub configs/
 autoconf
 %configure
