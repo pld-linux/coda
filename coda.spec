@@ -45,9 +45,9 @@ a complete coda client. Make sure to select the correct C library
 version.
 
 %description client -l pl
-Ten pakiet zawiera g³ównego klienta, zarz±dcê cache Venus. Do³±czone s±
-tak¿e binaria cfs, narzêdzia do logowania, zarz±dzania ACL-ami itp.,
-narzêdzia do u¿ywania z laptopami i narzêdzia do naprawiania
+Ten pakiet zawiera g³ównego klienta, zarz±dcê cache Venus. Do³±czone
+s± tak¿e binaria cfs, narzêdzia do logowania, zarz±dzania ACL-ami
+itp., narzêdzia do u¿ywania z laptopami i narzêdzia do naprawiania
 konfliktów. S± tak¿e narzêdzia cmon i codacon do monitorowania
 aktywno¶ci Cody. Pakiet wymaga Cody w kernelu lub module kernela.
 
@@ -63,8 +63,8 @@ as well as the volume utilities. For highest performance you will need
 a modified kernel with inode system calls.
 
 %description server -l pl
-Ten pakiet zawiera codasrv - serwer systemu plików Coda, oraz narzêdzia
-do wolumenów. Aby osi±gn±æ lepsz± wydajno¶æ, potrzebny jest
+Ten pakiet zawiera codasrv - serwer systemu plików Coda, oraz
+narzêdzia do wolumenów. Aby osi±gn±æ lepsz± wydajno¶æ, potrzebny jest
 zmodyfikowany kernel z wywo³aniami dotycz±cymi inodów.
 
 %package backup
@@ -121,7 +121,7 @@ else
 fi
 
 %post client
-if [ -e /usr/coda/etc/vstab ]; then 
+if [ -e /usr/coda/etc/vstab ]; then
 	touch /usr/coda/venus.cache/INIT
 else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
@@ -183,7 +183,7 @@ fi
 %attr(755,root,root) %{_bindir}/xaskuser
 %attr(755,root,root) %{_sbindir}/volmunge
 
-%files server	
+%files server
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/startserver
 %attr(755,root,root) %{_sbindir}/partial-reinit.sh
@@ -215,7 +215,7 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/auth2.init
 %attr(754,root,root) /etc/rc.d/init.d/update.init
 
-%files backup	
+%files backup
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/backup.sh
 %attr(755,root,root) %{_sbindir}/tape.pl
