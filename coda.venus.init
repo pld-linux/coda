@@ -26,7 +26,10 @@ case "$1" in
 	    msg_already_running venus
 	else
 	    msg_starting venus
+	    busy
 	    venus &
+	    deltext
+	    ok
 	    RETVAL=$?
 	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/venus
 	fi

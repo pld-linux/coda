@@ -26,7 +26,8 @@ case "$1" in
 	    msg_already_running codasrv
 	else
 	    msg_starting codasrv
-	    startserver &
+	    startserver >/dev/null 2>&1 &
+	    ok
 	    RETVAL=$?
 	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/codasrv
 	fi
@@ -34,8 +35,16 @@ case "$1" in
     stop)
         if [ -f /var/lock/subsys/codasrv ]; then
 	    msg_stopping codasrv
-	    volutil shutdown
-	    sleep 30
+	    busy
+	    volutil shutdown >/dev/null 2>&1
+	    ok
+	    show "Waiting for Coda server shutdown"
+	    busy
+	    while [ -f /var/lib/vice/srv/pid ]; do
+	        sleep 1
+	    done
+	    deltext
+	    ok
 	    rm -f /var/lock/subsys/codasrv
 	else
 	    msg_Not_Running codasrv

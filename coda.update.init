@@ -25,20 +25,24 @@ case "$1" in
 	if [ -f /var/lock/subsys/update ]; then
 	    msg_already_running update
 	else
-	    msg_starting update
+	    msg_starting rpc2portmap
 	    daemon rpc2portmap
+	    msg_starting updatesrv
 	    daemon updatesrv
-	    daemon updateclnt -h `cat /vice/db/scm`
+	    msg_starting updateclnt
+	    daemon updateclnt -h `cat /var/lib/vice/db/scm`
 	    RETVAL=$?
 	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/update
 	fi
         ;;
     stop)
         if [ -f /var/lock/subsys/update ]; then
-	    msg_stopping update
-	    killproc rpc2portmap
-	    killproc updatesrv
+	    msg_stopping updateclnt
 	    killproc updateclnt
+	    msg_stopping updatesrv
+	    killproc updatesrv
+	    msg_stopping rpc2portmap
+	    killproc rpc2portmap
 	    rm -f /var/lock/subsys/update
 	else
 	    msg_Not_Running update
