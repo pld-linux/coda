@@ -239,25 +239,3 @@ tixindex *tcl
 %{_sbindir}/updateclnt
 %{_sbindir}/updatefetch
 %{_bindir}/filcon
-
-%changelog
-* Fri Feb 12 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
-- adapt to BeroLinux
-
-* Sun Jun 21 1998 Peter Braam <braam@cs.cmu.edu>
-- get rid of the kernel package. This needs interaction during the build.
-- no more separate libc, glibc packages
-
-* Tue Dec 30 1997 Peter Braam <braam@cs.cmu.edu>
-- several changes: documentation separate
-- use variables: =`uname -r`, 5.0.1=coda version
-
-* Mon Jun 02 1997 Peter Braam <braam@cs.cmu.edu>
-- small changes to Elliots improvements.
-- some of his ideas are now in the scripts
-
-* Wed May 28 1997 Elliot Lee <sopwith@redhat.com>
-- Based upon 4.0.3-1 spec file.
-- Changed to BuildRoot
-- Do as much as possible at build time instead of in %post
-- Added initscript for venus
