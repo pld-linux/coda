@@ -97,12 +97,12 @@ else
 fi
 
 cd %{_libdir}/coda
-if [ ! -x /usr/bin/tixindex ]; then
-	chmod a+x /usr/bin/tixindex 
+if [ ! -x %{_bindir}/tixindex ]; then
+	chmod a+x %{_bindir}/tixindex 
 fi
 tixindex *tcl
-#if [ ! -f /usr/bin/tixwish ]; then
-#	ln -s /usr/bin/tixwish* /usr/bin/tixwish
+#if [ ! -f %{_bindir}/tixwish ]; then
+#	ln -s %{_bindir}/tixwish* /usr/bin/tixwish
 #	if [ x$? != x0 ]; then
 #		echo "**WARNING: tixwish is not correctly installed"
 #	fi
@@ -136,27 +136,27 @@ tixindex *tcl
 /usr/sbin/vutil
 /usr/sbin/venus
 /usr/sbin/au
-/usr/bin/advice_srv
-/usr/bin/filcon
-/usr/bin/clog
-/usr/bin/cpasswd
-/usr/bin/ctokens
-/usr/bin/cunlog
-/usr/bin/repair
-/usr/bin/cmon
-/usr/bin/codacon
-/usr/bin/cfs
-/usr/bin/hoard
-/usr/bin/spy
-/usr/bin/replay
-/usr/bin/parser
-/usr/bin/filerepair
-/usr/bin/removeinc
-/usr/bin/xfrepair
-/usr/bin/xaskuser
-/usr/bin/logbandwidth
-/usr/bin/logcmls
-/usr/bin/logreintegration
+%{_bindir}/advice_srv
+%{_bindir}/filcon
+%{_bindir}/clog
+%{_bindir}/cpasswd
+%{_bindir}/ctokens
+%{_bindir}/cunlog
+%{_bindir}/repair
+%{_bindir}/cmon
+%{_bindir}/codacon
+%{_bindir}/cfs
+%{_bindir}/hoard
+%{_bindir}/spy
+%{_bindir}/replay
+%{_bindir}/parser
+%{_bindir}/filerepair
+%{_bindir}/removeinc
+%{_bindir}/xfrepair
+%{_bindir}/xaskuser
+%{_bindir}/logbandwidth
+%{_bindir}/logcmls
+%{_bindir}/logreintegration
 /usr/sbin/volmunge
 %{_libdir}/coda/Advice.tcl
 %{_libdir}/coda/CodaConsole
@@ -219,10 +219,10 @@ tixindex *tcl
 /usr/sbin/updatesrv
 /usr/sbin/updateclnt
 /usr/sbin/updatefetch
-/usr/bin/filcon
-/usr/bin/norton
-/usr/bin/norton-reinit
-/usr/bin/reinit
+%{_bindir}/filcon
+%{_bindir}/norton
+%{_bindir}/norton-reinit
+%{_bindir}/reinit
 /etc/rc.d/init.d/codasrv.init
 /etc/rc.d/init.d/auth2.init
 /etc/rc.d/init.d/update.init
@@ -238,7 +238,7 @@ tixindex *tcl
 /usr/sbin/updatesrv
 /usr/sbin/updateclnt
 /usr/sbin/updatefetch
-/usr/bin/filcon
+%{_bindir}/filcon
 
 %changelog
 * Fri Feb 12 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
