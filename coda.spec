@@ -13,6 +13,7 @@ BuildRequires:	automake
 BuildRequires:	lwp-devel
 BuildRequires:	rvm-devel
 BuildRequires:	rpc2-devel
+BuildRequires:	ncurses-devel
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
