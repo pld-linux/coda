@@ -3,7 +3,7 @@ Summary(pl):	Rozproszony system plików Coda
 Name:		coda
 Version:	5.3.10
 Release:	1
-License:	CMU
+License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Patch0:		%{name}-ugly-common.patch
