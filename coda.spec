@@ -24,6 +24,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	e2fsprogs-devel >= 1.34
+BuildRequires:	libstdc++-devel
 BuildRequires:	lwp-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
