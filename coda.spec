@@ -93,7 +93,7 @@ fi
 if [ -e /usr/coda/etc/vstab ]; then 
 	touch /usr/coda/venus.cache/INIT
 else
-	/usr/sbin/venus-setup testserver.coda.cs.cmu.edu 40000
+	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
 
 cd %{_libdir}/coda
@@ -132,10 +132,10 @@ tixindex *tcl
 /etc/rc.d/init.d/venus.init
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
-/usr/sbin/venus-setup
-/usr/sbin/vutil
-/usr/sbin/venus
-/usr/sbin/au
+%{_sbindir}/venus-setup
+%{_sbindir}/vutil
+%{_sbindir}/venus
+%{_sbindir}/au
 %{_bindir}/advice_srv
 %{_bindir}/filcon
 %{_bindir}/clog
@@ -157,7 +157,7 @@ tixindex *tcl
 %{_bindir}/logbandwidth
 %{_bindir}/logcmls
 %{_bindir}/logreintegration
-/usr/sbin/volmunge
+%{_sbindir}/volmunge
 %{_libdir}/coda/Advice.tcl
 %{_libdir}/coda/CodaConsole
 %{_libdir}/coda/Consider.tcl
@@ -189,36 +189,36 @@ tixindex *tcl
 %{_libdir}/coda/tixCodaMeter.tcl
 
 %files server	
-/usr/sbin/rvmutl
-/usr/sbin/rdsinit
-/usr/sbin/startserver
-/usr/sbin/partial-reinit.sh
-/usr/sbin/createvol_rep
-/usr/sbin/purgevol
-/usr/sbin/purgevol_rep
-/usr/sbin/bldvldb.sh
-/usr/sbin/vice-setup
-/usr/sbin/vice-setup-rvm
-/usr/sbin/vice-setup-srvdir
-/usr/sbin/vice-setup-user
-/usr/sbin/vice-setup-scm
-/usr/sbin/vice-setup-ports
-/usr/sbin/vice-killvolumes
-/usr/sbin/pcfgen
-/usr/sbin/pwd2pdb
-/usr/sbin/mvdb
-/usr/sbin/auth2
-/usr/sbin/initpw
-/usr/sbin/volutil
-/usr/sbin/rpc2portmap
-/usr/sbin/makeftree
-/usr/sbin/inoder
-/usr/sbin/parserecdump
-/usr/sbin/codasrv
-/usr/sbin/printvrdb
-/usr/sbin/updatesrv
-/usr/sbin/updateclnt
-/usr/sbin/updatefetch
+%{_sbindir}/rvmutl
+%{_sbindir}/rdsinit
+%{_sbindir}/startserver
+%{_sbindir}/partial-reinit.sh
+%{_sbindir}/createvol_rep
+%{_sbindir}/purgevol
+%{_sbindir}/purgevol_rep
+%{_sbindir}/bldvldb.sh
+%{_sbindir}/vice-setup
+%{_sbindir}/vice-setup-rvm
+%{_sbindir}/vice-setup-srvdir
+%{_sbindir}/vice-setup-user
+%{_sbindir}/vice-setup-scm
+%{_sbindir}/vice-setup-ports
+%{_sbindir}/vice-killvolumes
+%{_sbindir}/pcfgen
+%{_sbindir}/pwd2pdb
+%{_sbindir}/mvdb
+%{_sbindir}/auth2
+%{_sbindir}/initpw
+%{_sbindir}/volutil
+%{_sbindir}/rpc2portmap
+%{_sbindir}/makeftree
+%{_sbindir}/inoder
+%{_sbindir}/parserecdump
+%{_sbindir}/codasrv
+%{_sbindir}/printvrdb
+%{_sbindir}/updatesrv
+%{_sbindir}/updateclnt
+%{_sbindir}/updatefetch
 %{_bindir}/filcon
 %{_bindir}/norton
 %{_bindir}/norton-reinit
@@ -228,16 +228,16 @@ tixindex *tcl
 /etc/rc.d/init.d/update.init
 
 %files backup	
-/usr/sbin/backup.sh
-/usr/sbin/tape.pl
-/usr/sbin/auth2
-/usr/sbin/volutil
-/usr/sbin/backup
-/usr/sbin/readdump
-/usr/sbin/merge
-/usr/sbin/updatesrv
-/usr/sbin/updateclnt
-/usr/sbin/updatefetch
+%{_sbindir}/backup.sh
+%{_sbindir}/tape.pl
+%{_sbindir}/auth2
+%{_sbindir}/volutil
+%{_sbindir}/backup
+%{_sbindir}/readdump
+%{_sbindir}/merge
+%{_sbindir}/updatesrv
+%{_sbindir}/updateclnt
+%{_sbindir}/updatefetch
 %{_bindir}/filcon
 
 %changelog
