@@ -58,7 +58,8 @@ Coda.
 Summary:	Coda client
 Summary(pl):	Klient Cody
 Group:		Networking/Daemons
-Prereq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	coda-common
 
 %description client
@@ -82,7 +83,8 @@ aktywno¶ci Cody. Pakiet wymaga Cody w kernelu lub module kernela.
 Summary:	Coda server
 Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
-Prereq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	coda-common
 
 %description server
