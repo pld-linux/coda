@@ -1,11 +1,12 @@
 Summary:	Coda distributed filesystem
 Name:		coda
-Version:	cvs20001115
+Version:	5.3.10
 Release:	1
 Copyright:	CMU
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
 Source0:	%{name}-%{version}.tgz
+Patch0:     	%{name}-ugly-common.patch
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -61,7 +62,7 @@ BEWARE: CVS VERSION
 
 
 %prep
-%setup -q -n coda
+%setup -q
 %patch0 -p1
 
 %build
