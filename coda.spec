@@ -87,6 +87,7 @@ Group:		Networking/Daemons
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	coda-common
+Requires:	rvm-tools
 
 %description server
 This package contains the fileserver codasrv for the coda filesystem,
