@@ -4,25 +4,27 @@ Version:	5.2.4
 Release:	1
 Copyright:	CMU
 Group:		Networking/Daemons
-Source:		ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
+Group(pl):	Sieciowe/Serwery
+Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Source package for the Coda filesystem.  Three packages are provided by
+Source package for the Coda filesystem. Three packages are provided by
 this rpm: the client and server and the backup components. Separately
-you must install a kernel module, or have a Coda enabled kernel, and 
+you must install a kernel module, or have a Coda enabled kernel, and
 you should get the Coda documentation package.
 
 %description -l pl
-Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety: klienta, serwer
-oraz komponenty do backupu. Nale¿y oddzielnie zainstalowaæ modu³ do j±dra
-(lub mieæ j±dro z obs³ug± Cody), nale¿y rownie¿ zaopatrzyæ siê w pakiet
-z dokumentacj± Cody.
+Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety:
+klienta, serwer oraz komponenty do backupu. Nale¿y oddzielnie
+zainstalowaæ modu³ do j±dra (lub mieæ j±dro z obs³ug± Cody), nale¿y
+rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
 
 %package client
 Summary:	Coda client
 Group:		Networking/Daemons
+Group(pl):	Sieciowe/Serwery
 
 %description client
 This package contains the main client program, the cachemanager Venus.
@@ -31,21 +33,23 @@ manipulation etc, the hoarding tools for use with laptops and repair
 tools for fixing conflicts. Finally there is the cmon and codacon
 console utilities to monitor Coda's activities. You need a Coda
 kernel-module for your kernel version, or Coda in your kernel, to have
-a complete coda client.  Make sure to select the correct C library
+a complete coda client. Make sure to select the correct C library
 version.
 
 %package server
 Summary:	Coda server
 Group:		Networking/Daemons
+Group(pl):	Sieciowe/Serwery
 
 %description server
 This package contains the fileserver codasrv for the coda filesystem,
-as well as the volume utilities.  For highest performance you will
-need a modified kernel with inode system calls.
+as well as the volume utilities. For highest performance you will need
+a modified kernel with inode system calls.
 
 %package backup
-Summary: Coda backup coordinator
-Group: Networking/Daemons
+Summary:	Coda backup coordinator
+Group:		Networking/Daemons
+Group(pl):	Sieciowe/Serwery
 %description backup
 This package contains the backup software for the coda filesystem, as
 well as the volume utilities.
@@ -56,20 +60,20 @@ well as the volume utilities.
 %build
 CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target_platform} \
-	--prefix=/usr
+--prefix=%{_prefix}
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/usr/coda/venus.cache $RPM_BUILD_ROOT/dev \
-	$RPM_BUILD_ROOT/usr/coda/etc \
+install -d $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache $RPM_BUILD_ROOT/dev \
+	$RPM_BUILD_ROOT%{_prefix}/coda%{_sysconfdir} \
 	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d\
 	$RPM_BUILD_ROOT%{_libdir}/coda
 
 make client-install
 make server-install
 
-touch $RPM_BUILD_ROOT/usr/coda/venus.cache/INIT
+touch $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache/INIT
 mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
 touch $RPM_BUILD_ROOT/coda/NOT_REALLY_CODA
 
@@ -109,7 +113,7 @@ tixindex *tcl
 #if [ ! -f %{_bindir}/tixwish ]; then
 #	ln -s %{_bindir}/tixwish* /usr/bin/tixwish
 #	if [ x$? != x0 ]; then
-#		echo "**WARNING: tixwish is not correctly installed"
+#		echo "**WARNING:tixwish is not correctly installed"
 #	fi
 #fi
 /sbin/chkconfig --add venus.init
@@ -128,40 +132,41 @@ tixindex *tcl
 /sbin/chkconfig --del codasrv.init
 
 %files client
+%defattr(644,root,root,755)
 /dev/cfs0
-%dir /usr/coda
-%dir /usr/coda/etc
-%dir /usr/coda/venus.cache
-%verify() /usr/coda/venus.cache/INIT
+%dir %{_prefix}/coda
+%dir %{_prefix}/coda%{_sysconfdir}
+%dir %{_prefix}/coda/venus.cache
+%verify() %{_prefix}/coda/venus.cache/INIT
 /etc/rc.d/init.d/venus.init
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
-%{_sbindir}/venus-setup
-%{_sbindir}/vutil
-%{_sbindir}/venus
-%{_sbindir}/au
-%{_bindir}/advice_srv
-%{_bindir}/filcon
-%{_bindir}/clog
-%{_bindir}/cpasswd
-%{_bindir}/ctokens
-%{_bindir}/cunlog
-%{_bindir}/repair
-%{_bindir}/cmon
-%{_bindir}/codacon
-%{_bindir}/cfs
-%{_bindir}/hoard
-%{_bindir}/spy
-%{_bindir}/replay
-%{_bindir}/parser
-%{_bindir}/filerepair
-%{_bindir}/removeinc
-%{_bindir}/xfrepair
-%{_bindir}/xaskuser
-%{_bindir}/logbandwidth
-%{_bindir}/logcmls
-%{_bindir}/logreintegration
-%{_sbindir}/volmunge
+%attr(755,root,root) %{_sbindir}/venus-setup
+%attr(755,root,root) %{_sbindir}/vutil
+%attr(755,root,root) %{_sbindir}/venus
+%attr(755,root,root) %{_sbindir}/au
+%attr(755,root,root) %{_bindir}/advice_srv
+%attr(755,root,root) %{_bindir}/filcon
+%attr(755,root,root) %{_bindir}/clog
+%attr(755,root,root) %{_bindir}/cpasswd
+%attr(755,root,root) %{_bindir}/ctokens
+%attr(755,root,root) %{_bindir}/cunlog
+%attr(755,root,root) %{_bindir}/repair
+%attr(755,root,root) %{_bindir}/cmon
+%attr(755,root,root) %{_bindir}/codacon
+%attr(755,root,root) %{_bindir}/cfs
+%attr(755,root,root) %{_bindir}/hoard
+%attr(755,root,root) %{_bindir}/spy
+%attr(755,root,root) %{_bindir}/replay
+%attr(755,root,root) %{_bindir}/parser
+%attr(755,root,root) %{_bindir}/filerepair
+%attr(755,root,root) %{_bindir}/removeinc
+%attr(755,root,root) %{_bindir}/xfrepair
+%attr(755,root,root) %{_bindir}/xaskuser
+%attr(755,root,root) %{_bindir}/logbandwidth
+%attr(755,root,root) %{_bindir}/logcmls
+%attr(755,root,root) %{_bindir}/logreintegration
+%attr(755,root,root) %{_sbindir}/volmunge
 %{_libdir}/coda/Advice.tcl
 %{_libdir}/coda/CodaConsole
 %{_libdir}/coda/Consider.tcl
@@ -193,53 +198,55 @@ tixindex *tcl
 %{_libdir}/coda/tixCodaMeter.tcl
 
 %files server	
-%{_sbindir}/rvmutl
-%{_sbindir}/rdsinit
-%{_sbindir}/startserver
-%{_sbindir}/partial-reinit.sh
-%{_sbindir}/createvol_rep
-%{_sbindir}/purgevol
-%{_sbindir}/purgevol_rep
-%{_sbindir}/bldvldb.sh
-%{_sbindir}/vice-setup
-%{_sbindir}/vice-setup-rvm
-%{_sbindir}/vice-setup-srvdir
-%{_sbindir}/vice-setup-user
-%{_sbindir}/vice-setup-scm
-%{_sbindir}/vice-setup-ports
-%{_sbindir}/vice-killvolumes
-%{_sbindir}/pcfgen
-%{_sbindir}/pwd2pdb
-%{_sbindir}/mvdb
-%{_sbindir}/auth2
-%{_sbindir}/initpw
-%{_sbindir}/volutil
-%{_sbindir}/rpc2portmap
-%{_sbindir}/makeftree
-%{_sbindir}/inoder
-%{_sbindir}/parserecdump
-%{_sbindir}/codasrv
-%{_sbindir}/printvrdb
-%{_sbindir}/updatesrv
-%{_sbindir}/updateclnt
-%{_sbindir}/updatefetch
-%{_bindir}/filcon
-%{_bindir}/norton
-%{_bindir}/norton-reinit
-%{_bindir}/reinit
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/rvmutl
+%attr(755,root,root) %{_sbindir}/rdsinit
+%attr(755,root,root) %{_sbindir}/startserver
+%attr(755,root,root) %{_sbindir}/partial-reinit.sh
+%attr(755,root,root) %{_sbindir}/createvol_rep
+%attr(755,root,root) %{_sbindir}/purgevol
+%attr(755,root,root) %{_sbindir}/purgevol_rep
+%attr(755,root,root) %{_sbindir}/bldvldb.sh
+%attr(755,root,root) %{_sbindir}/vice-setup
+%attr(755,root,root) %{_sbindir}/vice-setup-rvm
+%attr(755,root,root) %{_sbindir}/vice-setup-srvdir
+%attr(755,root,root) %{_sbindir}/vice-setup-user
+%attr(755,root,root) %{_sbindir}/vice-setup-scm
+%attr(755,root,root) %{_sbindir}/vice-setup-ports
+%attr(755,root,root) %{_sbindir}/vice-killvolumes
+%attr(755,root,root) %{_sbindir}/pcfgen
+%attr(755,root,root) %{_sbindir}/pwd2pdb
+%attr(755,root,root) %{_sbindir}/mvdb
+%attr(755,root,root) %{_sbindir}/auth2
+%attr(755,root,root) %{_sbindir}/initpw
+%attr(755,root,root) %{_sbindir}/volutil
+%attr(755,root,root) %{_sbindir}/rpc2portmap
+%attr(755,root,root) %{_sbindir}/makeftree
+%attr(755,root,root) %{_sbindir}/inoder
+%attr(755,root,root) %{_sbindir}/parserecdump
+%attr(755,root,root) %{_sbindir}/codasrv
+%attr(755,root,root) %{_sbindir}/printvrdb
+%attr(755,root,root) %{_sbindir}/updatesrv
+%attr(755,root,root) %{_sbindir}/updateclnt
+%attr(755,root,root) %{_sbindir}/updatefetch
+%attr(755,root,root) %{_bindir}/filcon
+%attr(755,root,root) %{_bindir}/norton
+%attr(755,root,root) %{_bindir}/norton-reinit
+%attr(755,root,root) %{_bindir}/reinit
 /etc/rc.d/init.d/codasrv.init
 /etc/rc.d/init.d/auth2.init
 /etc/rc.d/init.d/update.init
 
 %files backup	
-%{_sbindir}/backup.sh
-%{_sbindir}/tape.pl
-%{_sbindir}/auth2
-%{_sbindir}/volutil
-%{_sbindir}/backup
-%{_sbindir}/readdump
-%{_sbindir}/merge
-%{_sbindir}/updatesrv
-%{_sbindir}/updateclnt
-%{_sbindir}/updatefetch
-%{_bindir}/filcon
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/backup.sh
+%attr(755,root,root) %{_sbindir}/tape.pl
+%attr(755,root,root) %{_sbindir}/auth2
+%attr(755,root,root) %{_sbindir}/volutil
+%attr(755,root,root) %{_sbindir}/backup
+%attr(755,root,root) %{_sbindir}/readdump
+%attr(755,root,root) %{_sbindir}/merge
+%attr(755,root,root) %{_sbindir}/updatesrv
+%attr(755,root,root) %{_sbindir}/updateclnt
+%attr(755,root,root) %{_sbindir}/updatefetch
+%attr(755,root,root) %{_bindir}/filcon
