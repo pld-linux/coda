@@ -11,6 +11,8 @@ Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Patch0:		%{name}-ugly-common.patch
 URL:		http://www.coda.cs.cmu.edu/
 Requires:	bc
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
