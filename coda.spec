@@ -6,7 +6,7 @@ Copyright:	CMU
 Group:		Networking/Daemons
 Source:		ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Requires:	bc
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Source package for the Coda filesystem.  Three packages are provided by
@@ -50,7 +50,6 @@ Group: Networking/Daemons
 This package contains the backup software for the coda filesystem, as
 well as the volume utilities.
 
-	
 %prep
 %setup -q
 
@@ -127,7 +126,6 @@ tixindex *tcl
 /sbin/chkconfig --del update.init
 /sbin/chkconfig --del auth2.init
 /sbin/chkconfig --del codasrv.init
-
 
 %files client
 /dev/cfs0
