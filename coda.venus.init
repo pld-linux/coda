@@ -25,7 +25,7 @@ fi
 
 RETVAL=0
 case "$1" in
-	start)
+  start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/venus ]; then
 		msg_starting venus
@@ -38,7 +38,7 @@ case "$1" in
 		msg_already_running venus
 	fi
 	;;
-	stop)
+  stop)
 	if [ -f /var/lock/subsys/venus ]; then
 		msg_stopping venus
 		killproc venus
@@ -58,7 +58,6 @@ case "$1" in
   *)
 	msg_usage "$0 {start|stop|restart|force-reload|status}"
 	exit 3
-	;;
 esac
 
 exit $RETVAL
