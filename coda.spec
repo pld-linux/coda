@@ -5,18 +5,20 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.5
+Version:	6.0.6
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	84518dd123274cabc2aaee7cc5cb4c8d
+# Source0-md5:	1feb4b431b72f725b568cc57a759714f
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
 Source4:	%{name}.update.init
 Patch0:		%{name}-ugly-common.patch
-#Patch1:		%{name}-FHS.patch
+Patch1:		%{name}-FHS.patch
+Patch2:		%{name}-gcc-334.patch
+Patch3:		%{name}-gcc-334-2.patch
 URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -115,7 +117,11 @@ narzêdzia do wolumenów.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
+cd coda-src/venus
+%patch2
+cd ../../
+%patch3 -p1
 
 %build
 touch ChangeLog
@@ -123,7 +129,7 @@ touch ChangeLog
 #%{__aclocal}
 cp /usr/share/automake/config.sub configs/
 autoconf
-%configure
+%configure --enable-crypto
 %{__make} OPTFLAGS="%{rpmcflags}"
 
 %install
@@ -262,6 +268,7 @@ fi
 %attr(755,root,root) %{_bindir}/hoard
 %attr(755,root,root) %{_bindir}/spy
 %attr(755,root,root) %{_bindir}/parser
+%attr(755,root,root) %{_bindir}/rvmsizer
 %attr(755,root,root) %{_bindir}/smon2
 %attr(755,root,root) %{_bindir}/filerepair
 %attr(755,root,root) %{_bindir}/removeinc
