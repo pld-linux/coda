@@ -22,6 +22,7 @@ Patch3:		%{name}-gcc-334-2.patch
 URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	e2fsprogs-devel >= 1.34
 BuildRequires:	libstdc++-devel
@@ -31,7 +32,6 @@ BuildRequires:	readline-devel
 BuildRequires:	rpc2-devel
 BuildRequires:	rvm-devel
 BuildRequires:	rvm-tools
-BuildRequires:	yacc
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
