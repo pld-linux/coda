@@ -1,12 +1,14 @@
 Summary:	Coda distributed filesystem
+Summary(pl):	Rozproszony system plików Coda
 Name:		coda
 Version:	5.3.10
 Release:	1
 Copyright:	CMU
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Source0:	%{name}-%{version}.tgz
-Patch0:     	%{name}-ugly-common.patch
+Patch0:		%{name}-ugly-common.patch
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -14,19 +16,19 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Source package for the Coda filesystem. Three packages are provided by
 this rpm: the client and server and the backup components. Separately
 you must install a kernel module, or have a Coda enabled kernel, and
-you should get the Coda documentation package.
-BEWARE: CVS VERSION
+you should get the Coda documentation package. BEWARE: CVS VERSION
 
 %description -l pl
 Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety:
 klienta, serwer oraz komponenty do backupu. Nale¿y oddzielnie
 zainstalowaæ modu³ do j±dra (lub mieæ j±dro z obs³ug± Cody), nale¿y
-rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
-UWAGA: WERSJA CVS
+rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody. UWAGA: WERSJA CVS
 
 %package client
 Summary:	Coda client
+Summary(pl):	Klient Cody
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 
 %description client
@@ -37,29 +39,26 @@ tools for fixing conflicts. Finally there is the cmon and codacon
 console utilities to monitor Coda's activities. You need a Coda
 kernel-module for your kernel version, or Coda in your kernel, to have
 a complete coda client. Make sure to select the correct C library
-version.
-BEWARE: CVS VERSION
+version. BEWARE: CVS VERSION
 
 %package server
 Summary:	Coda server
+Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 
 %description server
 This package contains the fileserver codasrv for the coda filesystem,
 as well as the volume utilities. For highest performance you will need
-a modified kernel with inode system calls.
-BEWARE: CVS VERSION
+a modified kernel with inode system calls. BEWARE: CVS VERSION
 
 %package backup
 Summary:	Coda backup coordinator
-Group:		Networking/Daemons
-Group(pl):	Sieciowe/Serwery
+Summary(pl):	Program do zarz±dzania backupem Cody
 %description backup
 This package contains the backup software for the coda filesystem, as
-well as the volume utilities.
-BEWARE: CVS VERSION
-
+well as the volume utilities. BEWARE: CVS VERSION
 
 %prep
 %setup -q
@@ -70,11 +69,11 @@ touch ChangeLog
 autoheader
 aclocal
 autoconf
-#%configure
-CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
+#%%configure
+CFLAGS="%{rpmcflags}" CXXFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
 ./configure %{_target_platform} \
 	--prefix=%{_prefix}
-%{__make} OPTFLAGS="$RPM_OPT_FLAGS"
+%{__make} OPTFLAGS="%{rpmcflags}"
 
 
 %install
@@ -91,6 +90,9 @@ touch $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache/INIT
 touch $RPM_BUILD_ROOT/coda/NOT_REALLY_CODA
 
 %clean
+Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
+Group(pl):	Sieciowe/Serwery
 rm -rf $RPM_BUILD_ROOT
 
 %pre client
