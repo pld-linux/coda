@@ -45,7 +45,7 @@ you should get the Coda documentation package.
 Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety:
 klienta, serwer oraz komponenty do backupu. Nale¿y oddzielnie
 zainstalowaæ modu³ do j±dra (lub mieæ j±dro z obs³ug± Cody), nale¿y
-rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
+równie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
 
 %package common
 Summary:	Coda filesystem common programs
