@@ -5,12 +5,12 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.1
-Release:	1
+Version:	6.0.2
+Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	5cdd67264fe89e1859f5a6e25ef259d1
+# Source0-md5:	bb3b98c3302e0d5a2a9d16e88055838c
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
@@ -22,11 +22,11 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	lwp-devel
-BuildRequires:	rvm-devel
-BuildRequires:	rvm-tools
-BuildRequires:	rpc2-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
+BuildRequires:	rpc2-devel
+BuildRequires:	rvm-devel
+BuildRequires:	rvm-tools
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
