@@ -15,48 +15,51 @@
 
 # Check that networking is up
 if is_no "${NETWORKING}"; then
-    msg_network_down update
-    exit 1
+	msg_network_down update
+	exit 1
 fi
 
 case "$1" in
-    start)
-        # Check if the service is already running?
+  start)
+	# Check if the service is already running?
 	if [ -f /var/lock/subsys/update ]; then
-	    msg_already_running update
+		msg_already_running update
+		exit 1
 	else
-	    msg_starting rpc2portmap
-	    daemon rpc2portmap
-	    msg_starting updatesrv
-	    daemon updatesrv
-	    msg_starting updateclnt
-	    daemon updateclnt -h `cat /var/lib/vice/db/scm`
-	    RETVAL=$?
-	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/update
+		msg_starting rpc2portmap
+		daemon rpc2portmap
+		msg_starting updatesrv
+		daemon updatesrv
+		msg_starting updateclnt
+		daemon updateclnt -h `cat /var/lib/vice/db/scm`
+		RETVAL=$?
+		[ RETVAL -eq 0 ] && touch /var/lock/subsys/update
 	fi
-        ;;
-    stop)
-        if [ -f /var/lock/subsys/update ]; then
-	    msg_stopping updateclnt
-	    killproc updateclnt
-	    msg_stopping updatesrv
-	    killproc updatesrv
-	    msg_stopping rpc2portmap
-	    killproc rpc2portmap
-	    rm -f /var/lock/subsys/update
+	;;
+  stop)
+	if [ -f /var/lock/subsys/update ]; then
+		msg_stopping updateclnt
+		killproc updateclnt
+		msg_stopping updatesrv
+		killproc updatesrv
+		msg_stopping rpc2portmap
+		killproc rpc2portmap
+		rm -f /var/lock/subsys/update
 	else
-	    msg_Not_Running update
+		msg_not_running update
+		exit 1
 	fi
-        ;;
-    restart)
-        $0 stop
+	;;
+  status)
+	;;
+  restart|reload)
+	$0 stop
 	$0 start
-        ;;
-    *)
-        msg_usage "$0 {start|stop|restart}"
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|reload|status}"
 	exit 1
 	;;
 esac
 
 exit $RETVAL
-

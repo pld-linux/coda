@@ -15,41 +15,45 @@
 
 # Check that networking is up
 if is_no "${NETWORKING}"; then
-    msg_network_down Venus
-    exit 1
+	msg_network_down Venus
+	exit 1
 fi
 
 case "$1" in
-    start)
-        # Check if the service is already running?
+	start)
+	# Check if the service is already running?
 	if [ -f /var/lock/subsys/venus ]; then
-	    msg_already_running venus
+		msg_already_running venus
+		exit 1
 	else
-	    msg_starting venus
-	    busy
-	    venus &
-	    deltext
-	    ok
-	    RETVAL=$?
-	    [ RETVAL -eq 0 ] && touch /var/lock/subsys/venus
+		msg_starting venus
+		busy
+		venus &
+		deltext
+		ok
+		RETVAL=$?
+		[ RETVAL -eq 0 ] && touch /var/lock/subsys/venus
 	fi
-        ;;
-    stop)
-        if [ -f /var/lock/subsys/venus ]; then
-	    msg_stopping venus
-	    killproc venus
-	    umount /coda
-	    rm -f /var/lock/subsys/venus
+	;;
+	stop)
+	if [ -f /var/lock/subsys/venus ]; then
+		msg_stopping venus
+		killproc venus
+		umount /coda
+		rm -f /var/lock/subsys/venus
 	else
-	    msg_Not_Running venus
+		msg_not_running venus
+		exit 1
 	fi
-        ;;
-    restart)
-        $0 stop
+	;;
+  status)
+	;;
+  restart|reload)
+	$0 stop
 	$0 start
-        ;;
-    *)
-        msg_usage "$0 {start|stop|restart}"
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|reload|status}"
 	exit 1
 	;;
 esac
