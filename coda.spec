@@ -10,9 +10,12 @@ Group(pl):	Sieciowe/Serwery
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Patch0:		%{name}-ugly-common.patch
 URL:		http://www.coda.cs.cmu.edu/
-Requires:	bc
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	lwp-devel
+BuildRequires:	rvm-devel
+BuildRequires:	rpc2-devel
+Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -91,9 +94,9 @@ narzêdzia do wolumenów.
 
 %build
 touch ChangeLog
-autoheader
+#autoheader
 aclocal
-autoconf
+#autoconf
 #%%configure
 CFLAGS="%{rpmcflags}" CXXFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
 ./configure %{_target_platform} \
