@@ -9,6 +9,7 @@ Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
 Patch0:		%{name}-ugly-common.patch
+URL:		http://www.coda.cs.cmu.edu/
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
