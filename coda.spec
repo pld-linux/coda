@@ -79,16 +79,15 @@ CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache $RPM_BUILD_ROOT/dev \
+install -d $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache \
 	$RPM_BUILD_ROOT%{_prefix}/coda%{_sysconfdir} \
-	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d\
-	$RPM_BUILD_ROOT%{_libdir}/coda
+	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d
 
-%{__make} client-install
-%{__make} server-install
+%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} client-install
+%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} server-install
 
 touch $RPM_BUILD_ROOT%{_prefix}/coda/venus.cache/INIT
-mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
+#mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
 touch $RPM_BUILD_ROOT/coda/NOT_REALLY_CODA
 
 %clean
@@ -118,18 +117,6 @@ if [ -e /usr/coda/etc/vstab ]; then
 else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
-
-cd %{_libdir}/coda
-if [ ! -x %{_bindir}/tixindex ]; then
-	chmod a+x %{_bindir}/tixindex 
-fi
-tixindex *tcl
-#if [ ! -f %{_bindir}/tixwish ]; then
-#	ln -s %{_bindir}/tixwish* /usr/bin/tixwish
-#	if [ x$? != x0 ]; then
-#		echo "**WARNING:tixwish is not correctly installed"
-#	fi
-#fi
 /sbin/chkconfig --add venus.init
 
 %postun
@@ -147,7 +134,6 @@ tixindex *tcl
 
 %files client
 %defattr(644,root,root,755)
-/dev/cfs0
 %dir %{_prefix}/coda
 %dir %{_prefix}/coda%{_sysconfdir}
 %dir %{_prefix}/coda/venus.cache
@@ -159,8 +145,6 @@ tixindex *tcl
 %attr(755,root,root) %{_sbindir}/vutil
 %attr(755,root,root) %{_sbindir}/venus
 %attr(755,root,root) %{_sbindir}/au
-%attr(755,root,root) %{_bindir}/advice_srv
-%attr(755,root,root) %{_bindir}/filcon
 %attr(755,root,root) %{_bindir}/clog
 %attr(755,root,root) %{_bindir}/cpasswd
 %attr(755,root,root) %{_bindir}/ctokens
@@ -177,44 +161,10 @@ tixindex *tcl
 %attr(755,root,root) %{_bindir}/removeinc
 %attr(755,root,root) %{_bindir}/xfrepair
 %attr(755,root,root) %{_bindir}/xaskuser
-%attr(755,root,root) %{_bindir}/logbandwidth
-%attr(755,root,root) %{_bindir}/logcmls
-%attr(755,root,root) %{_bindir}/logreintegration
 %attr(755,root,root) %{_sbindir}/volmunge
-%{_libdir}/coda/Advice.tcl
-%{_libdir}/coda/CodaConsole
-%{_libdir}/coda/Consider.tcl
-%{_libdir}/coda/ConsiderAdding.tcl
-%{_libdir}/coda/ConsiderRemoving.tcl
-%{_libdir}/coda/ControlPanel.tcl
-%{_libdir}/coda/Date.tcl
-%{_libdir}/coda/DiscoMiss.tcl
-%{_libdir}/coda/Events.tcl
-%{_libdir}/coda/Globals.tcl
-%{_libdir}/coda/Helper.tcl
-%{_libdir}/coda/HoardWalk.tcl
-%{_libdir}/coda/HoardWalkAdvice.tcl
-%{_libdir}/coda/Indicators.tcl
-%{_libdir}/coda/Initialization.tcl
-%{_libdir}/coda/Lock.tcl
-%{_libdir}/coda/Log.tcl
-%{_libdir}/coda/Network.tcl
-%{_libdir}/coda/OutsideWorld.tcl
-%{_libdir}/coda/ReadMiss.tcl
-%{_libdir}/coda/Reconnection.tcl
-%{_libdir}/coda/Reintegration.tcl
-%{_libdir}/coda/Repair.tcl
-%{_libdir}/coda/Space.tcl
-%{_libdir}/coda/Task.tcl
-%{_libdir}/coda/Timing.tcl
-%{_libdir}/coda/Tokens.tcl
-%{_libdir}/coda/WeakMiss.tcl
-%{_libdir}/coda/tixCodaMeter.tcl
 
 %files server	
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindir}/rvmutl
-%attr(755,root,root) %{_sbindir}/rdsinit
 %attr(755,root,root) %{_sbindir}/startserver
 %attr(755,root,root) %{_sbindir}/partial-reinit.sh
 %attr(755,root,root) %{_sbindir}/createvol_rep
@@ -226,16 +176,11 @@ tixindex *tcl
 %attr(755,root,root) %{_sbindir}/vice-setup-srvdir
 %attr(755,root,root) %{_sbindir}/vice-setup-user
 %attr(755,root,root) %{_sbindir}/vice-setup-scm
-%attr(755,root,root) %{_sbindir}/vice-setup-ports
 %attr(755,root,root) %{_sbindir}/vice-killvolumes
-%attr(755,root,root) %{_sbindir}/pcfgen
-%attr(755,root,root) %{_sbindir}/pwd2pdb
-%attr(755,root,root) %{_sbindir}/mvdb
 %attr(755,root,root) %{_sbindir}/auth2
 %attr(755,root,root) %{_sbindir}/initpw
 %attr(755,root,root) %{_sbindir}/volutil
 %attr(755,root,root) %{_sbindir}/rpc2portmap
-%attr(755,root,root) %{_sbindir}/makeftree
 %attr(755,root,root) %{_sbindir}/inoder
 %attr(755,root,root) %{_sbindir}/parserecdump
 %attr(755,root,root) %{_sbindir}/codasrv
@@ -243,7 +188,6 @@ tixindex *tcl
 %attr(755,root,root) %{_sbindir}/updatesrv
 %attr(755,root,root) %{_sbindir}/updateclnt
 %attr(755,root,root) %{_sbindir}/updatefetch
-%attr(755,root,root) %{_bindir}/filcon
 %attr(755,root,root) %{_bindir}/norton
 %attr(755,root,root) %{_bindir}/norton-reinit
 %attr(755,root,root) %{_bindir}/reinit
@@ -263,4 +207,3 @@ tixindex *tcl
 %attr(755,root,root) %{_sbindir}/updatesrv
 %attr(755,root,root) %{_sbindir}/updateclnt
 %attr(755,root,root) %{_sbindir}/updatefetch
-%attr(755,root,root) %{_bindir}/filcon
