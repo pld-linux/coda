@@ -14,6 +14,12 @@ this rpm: the client and server and the backup components. Separately
 you must install a kernel module, or have a Coda enabled kernel, and 
 you should get the Coda documentation package.
 
+%description -l pl
+Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety: klienta, serwer
+oraz komponenty do backupu. Nale¿y oddzielnie zainstalowaæ modu³ do j±dra
+(lub mieæ j±dro z obs³ug± Cody), nale¿y rownie¿ zaopatrzyæ siê w pakiet
+z dokumentacj± Cody.
+
 %package client
 Summary:	Coda client
 Group:		Networking/Daemons
