@@ -117,7 +117,7 @@ touch ChangeLog
 %{__aclocal}
 #autoconf
 #%%configure
-CFLAGS="%{rpmcflags}" CXXFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
+CFLAGS="%{rpmcflags}" CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions" LDFLAGS="%{rpmldflags}" \
 ./configure %{_target_platform} \
 	--prefix=%{_prefix}
 %{__make} OPTFLAGS="%{rpmcflags}"
