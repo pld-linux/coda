@@ -1,12 +1,13 @@
-Summary: Coda distributed filesystem
-Name: coda
-Version: 5.0.1
-Release: bero1
-Source: ftp://ftp.coda.cs.cmu.edu/pub/coda/src/coda-5.0.1.tar.bz2
-Requires: bc
-Copyright: CMU
-BuildRoot: /usr/src/RPM/BUILD/coda-build
-Group: Networking/Daemons
+Summary:	Coda distributed filesystem
+Name:		coda
+Version:	5.2.0
+Release:	1
+Copyright:	CMU
+Group:		Networking/Daemons
+Source:		ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
+Requires:	bc
+BuildRoot:	/tmp/%{name}-%{version}-root
+
 %description
 Source package for the Coda filesystem.  Three packages are provided by
 this rpm: the client and server and the backup components. Separately
@@ -14,8 +15,9 @@ you must install a kernel module, or have a Coda enabled kernel, and
 you should get the Coda documentation package.
 
 %package client
-Summary: Coda client
-Group: Networking/Daemons
+Summary:	Coda client
+Group:		Networking/Daemons
+
 %description client
 This package contains the main client program, the cachemanager Venus.
 Also included are the binaries for the cfs, utilities for logging, ACL
@@ -27,8 +29,9 @@ a complete coda client.  Make sure to select the correct C library
 version.
 
 %package server
-Summary: Coda server
-Group: Networking/Daemons
+Summary:	Coda server
+Group:		Networking/Daemons
+
 %description server
 This package contains the fileserver codasrv for the coda filesystem,
 as well as the volume utilities.  For highest performance you will
@@ -41,43 +44,22 @@ Group: Networking/Daemons
 This package contains the backup software for the coda filesystem, as
 well as the volume utilities.
 
-%changelog
-* Fri Feb 12 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
-- adapt to BeroLinux
-* Sun Jun 21 1998 Peter Braam <braam@cs.cmu.edu>
-- get rid of the kernel package. This needs interaction during the build.
-- no more separate libc, glibc packages
-* Tue Dec 30 1997 Peter Braam <braam@cs.cmu.edu>
-- several changes: documentation separate
-- use variables: =`uname -r`, 5.0.1=coda version
-* Mon Jun 02 1997 Peter Braam <braam@cs.cmu.edu>
-- small changes to Elliots improvements.
-- some of his ideas are now in the scripts
-* Wed May 28 1997 Elliot Lee <sopwith@redhat.com>
-- Based upon 4.0.3-1 spec file.
-- Changed to BuildRoot
-- Do as much as possible at build time instead of in %post
-- Added initscript for venus
 	
 %prep
-%setup -n coda-5.0.1
+%setup -q
 
 %build
-chown -R root.bin $RPM_BUILD_DIR/coda-5.0.1
-rm -rf $RPM_BUILD_DIR/obj-5.0.1
-mkdir $RPM_BUILD_DIR/obj-5.0.1
-cd $RPM_BUILD_DIR/obj-5.0.1
-CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" $RPM_BUILD_DIR/coda-5.0.1/configure --prefix=$RPM_BUILD_ROOT/usr
+CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
+./configure \
+	--prefix=/usr
 make
 
 %install
-cd $RPM_BUILD_DIR/obj-5.0.1
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr/coda/venus.cache $RPM_BUILD_ROOT/dev \
+install -d $RPM_BUILD_ROOT/usr/coda/venus.cache $RPM_BUILD_ROOT/dev \
 	$RPM_BUILD_ROOT/usr/coda/etc \
 	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d\
-	$RPM_BUILD_ROOT/$RPM_BUILD_DIR\
-	$RPM_BUILD_ROOT/usr/lib/coda $RPM_BUILD_ROOT/etc/rc.d/init.d
+	$RPM_BUILD_ROOT/usr/lib/coda
 
 make client-install
 make server-install
@@ -85,16 +67,6 @@ make server-install
 touch $RPM_BUILD_ROOT/usr/coda/venus.cache/INIT
 mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
 touch $RPM_BUILD_ROOT/coda/NOT_REALLY_CODA
-
-
-# for non debuging versions
-#if [ X1 != X1 ]; then
-strip $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT/vice/bin/* $RPM_BUILD_ROOT/usr/sbin/* || :
-#fi
-
-cd $RPM_BUILD_DIR
-cp $RPM_SOURCE_DIR/coda-5.0.1.tar.bz2 $RPM_BUILD_ROOT/$RPM_BUILD_DIR/coda-5.0.1.tar.bz2
-chown -R root.root $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -267,3 +239,25 @@ tixindex *tcl
 /usr/sbin/updateclnt
 /usr/sbin/updatefetch
 /usr/bin/filcon
+
+%changelog
+* Fri Feb 12 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
+- adapt to BeroLinux
+
+* Sun Jun 21 1998 Peter Braam <braam@cs.cmu.edu>
+- get rid of the kernel package. This needs interaction during the build.
+- no more separate libc, glibc packages
+
+* Tue Dec 30 1997 Peter Braam <braam@cs.cmu.edu>
+- several changes: documentation separate
+- use variables: =`uname -r`, 5.0.1=coda version
+
+* Mon Jun 02 1997 Peter Braam <braam@cs.cmu.edu>
+- small changes to Elliots improvements.
+- some of his ideas are now in the scripts
+
+* Wed May 28 1997 Elliot Lee <sopwith@redhat.com>
+- Based upon 4.0.3-1 spec file.
+- Changed to BuildRoot
+- Do as much as possible at build time instead of in %post
+- Added initscript for venus
