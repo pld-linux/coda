@@ -1,11 +1,11 @@
 Summary:	Coda distributed filesystem
 Name:		coda
-Version:	5.2.4
+Version:	cvs20001115
 Release:	1
 Copyright:	CMU
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
-Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tgz
+Source0:	%{name}-%{version}.tgz
 Requires:	bc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -14,12 +14,14 @@ Source package for the Coda filesystem. Three packages are provided by
 this rpm: the client and server and the backup components. Separately
 you must install a kernel module, or have a Coda enabled kernel, and
 you should get the Coda documentation package.
+BEWARE: CVS VERSION
 
 %description -l pl
 Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety:
 klienta, serwer oraz komponenty do backupu. Nale¿y oddzielnie
 zainstalowaæ modu³ do j±dra (lub mieæ j±dro z obs³ug± Cody), nale¿y
 rownie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
+UWAGA: WERSJA CVS
 
 %package client
 Summary:	Coda client
@@ -35,6 +37,7 @@ console utilities to monitor Coda's activities. You need a Coda
 kernel-module for your kernel version, or Coda in your kernel, to have
 a complete coda client. Make sure to select the correct C library
 version.
+BEWARE: CVS VERSION
 
 %package server
 Summary:	Coda server
@@ -45,6 +48,7 @@ Group(pl):	Sieciowe/Serwery
 This package contains the fileserver codasrv for the coda filesystem,
 as well as the volume utilities. For highest performance you will need
 a modified kernel with inode system calls.
+BEWARE: CVS VERSION
 
 %package backup
 Summary:	Coda backup coordinator
@@ -53,15 +57,24 @@ Group(pl):	Sieciowe/Serwery
 %description backup
 This package contains the backup software for the coda filesystem, as
 well as the volume utilities.
+BEWARE: CVS VERSION
+
 
 %prep
-%setup -q
+%setup -q -n coda
+%patch0 -p1
 
 %build
+touch ChangeLog
+autoheader
+aclocal
+autoconf
+#%configure
 CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target_platform} \
---prefix=%{_prefix}
-%{__make}
+	--prefix=%{_prefix}
+%{__make} OPTFLAGS="$RPM_OPT_FLAGS"
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
