@@ -1,6 +1,6 @@
 Summary:	Coda distributed filesystem
 Name:		coda
-Version:	5.2.0
+Version:	5.2.4
 Release:	1
 Copyright:	CMU
 Group:		Networking/Daemons
