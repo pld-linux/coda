@@ -33,10 +33,12 @@ case "$1" in
 		RETVAL=$?
 		msg_starting updatesrv
 		daemon updatesrv
-		[ RETVAL -eq 0 ] && RETVAL=$?
+		RET=$?
+		[ RETVAL -eq 0 ] && RETVAL=$RET
 		msg_starting updateclnt
 		daemon updateclnt -h `cat /var/lib/vice/db/scm`
-		[ RETVAL -eq 0 ] && RETVAL=$?
+		RET=$?
+		if [ RETVAL -eq 0 ] && RETVAL=$RET
 		[ RETVAL -eq 0 ] && touch /var/lock/subsys/update
 	else
 		msg_already_running update
