@@ -177,9 +177,9 @@ diff -ur coda-6.0.5/coda-src/scripts/vice-setup-scm coda-6.0.5-new/coda-src/scri
  fi
  
  # current first maximum replicated volume id
-diff -ur coda-6.0.5/coda-src/scripts/vice-setup-srvdir coda-6.0.5-new/coda-src/scripts/vice-setup-srvdir
---- coda-6.0.5/coda-src/scripts/vice-setup-srvdir	2003-06-02 21:33:55.000000000 -0600
-+++ coda-6.0.5-new/coda-src/scripts/vice-setup-srvdir	2004-04-02 23:42:20.073495966 -0700
+diff -ur coda-6.0.10/coda-src/scripts/vice-setup-srvdir.orig coda-6.0.10/coda-src/scripts/vice-setup-srvdir
+--- coda-6.0.10/coda-src/scripts/vice-setup-srvdir.orig	2004-09-04 08:03:32.000000000 +0200
++++ coda-6.0.10/coda-src/scripts/vice-setup-srvdir	2005-05-27 04:09:36.000000000 +0200
 @@ -28,7 +28,7 @@
  #
  # Configuration
@@ -189,12 +189,12 @@ diff -ur coda-6.0.5/coda-src/scripts/vice-setup-srvdir coda-6.0.5-new/coda-src/s
  numservers=1
  . "`codaconfedit server.conf`"
  
-@@ -66,15 +66,15 @@
+@@ -62,15 +62,15 @@
      echo
      
      if [ $numservers -gt 1 ]; then
--	echon "Where shall we store your file data for server $n ($bn) [/vicepa]? "
-+	echon "Where shall we store your file data for server $n ($bn) [/var/lib/coda/vicepa]? "
+-	echon "Where shall we store your file data for server $n ($hn) [/vicepa]? "
++	echon "Where shall we store your file data for server $n ($hn) [/var/lib/coda/vicepa]? "
      else
 -	echon 'Where shall we store your file data [/vicepa]? '
 +	echon 'Where shall we store your file data [/var/lib/coda/vicepa]? '
@@ -208,7 +208,6 @@ diff -ur coda-6.0.5/coda-src/scripts/vice-setup-srvdir coda-6.0.5-new/coda-src/s
      fi
  
      # Create the directory if needed.  (Symlink is OK.)
-Only in coda-6.0.5-new/coda-src/scripts: vice-setup-srvdir.orig
 diff -ur coda-6.0.5/coda-src/scripts/vice-setup-user coda-6.0.5-new/coda-src/scripts/vice-setup-user
 --- coda-6.0.5/coda-src/scripts/vice-setup-user	2003-05-23 12:26:52.000000000 -0600
 +++ coda-6.0.5-new/coda-src/scripts/vice-setup-user	2004-04-02 23:42:20.104491640 -0700

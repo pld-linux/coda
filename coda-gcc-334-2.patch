@@ -10,16 +10,3 @@ diff -ur coda-6.0.6-orig/coda-src/kerndep/pioctl.h coda-6.0.6/coda-src/kerndep/p
  #define _VALIDVICEIOCTL(com) (com >= _VICEIOCTL(0) && com <= _VICEIOCTL(255))
  
  
-Only in coda-6.0.6/coda-src/kerndep: pioctl.h~
-diff -ur coda-6.0.6-orig/coda-src/venus/comm.cc coda-6.0.6/coda-src/venus/comm.cc
---- coda-6.0.6-orig/coda-src/venus/comm.cc	2004-02-02 12:32:34.000000000 -0700
-+++ coda-6.0.6/coda-src/venus/comm.cc	2004-06-29 01:55:00.058082534 -0600
-@@ -173,7 +173,7 @@
-     sei.AckPoint = sftp_ackpoint;
-     sei.PacketSize = sftp_packetsize;
-     sei.EnforceQuota = 1;
--    sei.Port.Tag = (enum PortTag)0;
-+    sei.Port.Tag = (PortTag)0;
-     SFTP_Activate(&sei);
- 
-     /* RPC2 initialization. */

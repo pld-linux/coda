@@ -5,19 +5,18 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.6
+Version:	6.0.10
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	1feb4b431b72f725b568cc57a759714f
+# Source0-md5:	b2313baa5e5cc535b013648233825a84
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
 Source4:	%{name}.update.init
 Patch0:		%{name}-ugly-common.patch
 Patch1:		%{name}-FHS.patch
-Patch2:		%{name}-gcc-334.patch
 Patch3:		%{name}-gcc-334-2.patch
 URL:		http://www.coda.cs.cmu.edu/
 BuildRequires:	autoconf
@@ -26,7 +25,7 @@ BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	e2fsprogs-devel >= 1.34
 BuildRequires:	libstdc++-devel
-BuildRequires:	lwp-devel
+BuildRequires:	lwp-devel >= 2.0
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpc2-devel
@@ -120,9 +119,6 @@ narzêdzia do wolumenów.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-cd coda-src/venus
-%patch2
-cd ../../
 %patch3 -p1
 
 %build
@@ -256,7 +252,7 @@ fi
 %attr(755,root,root) %{_sbindir}/venus-setup
 %attr(755,root,root) %{_sbindir}/vutil
 %attr(755,root,root) %{_sbindir}/venus
-%attr(755,root,root) %{_sbindir}/au
+%attr(755,root,root) %{_bindir}/au
 %attr(755,root,root) %{_bindir}/clog
 %attr(755,root,root) %{_bindir}/coda_replay
 %attr(755,root,root) %{_bindir}/cpasswd
@@ -289,7 +285,6 @@ fi
 %attr(755,root,root) %{_sbindir}/partial-reinit.sh
 %attr(755,root,root) %{_sbindir}/createvol_rep
 %attr(755,root,root) %{_sbindir}/pdbtool
-%attr(755,root,root) %{_sbindir}/purgevol
 %attr(755,root,root) %{_sbindir}/purgevol_rep
 %attr(755,root,root) %{_sbindir}/bldvldb.sh
 %attr(755,root,root) %{_sbindir}/vice-setup
@@ -310,8 +305,8 @@ fi
 %attr(755,root,root) %{_sbindir}/updateclnt
 %attr(755,root,root) %{_sbindir}/updatefetch
 %attr(755,root,root) %{_sbindir}/coda-server-logrotate
-%attr(755,root,root) %{_bindir}/norton
-%attr(755,root,root) %{_bindir}/norton-reinit
+%attr(755,root,root) %{_sbindir}/norton
+%attr(755,root,root) %{_sbindir}/norton-reinit
 %attr(755,root,root) %{_bindir}/reinit
 %attr(754,root,root) /etc/rc.d/init.d/codasrv
 %attr(754,root,root) /etc/rc.d/init.d/auth2
