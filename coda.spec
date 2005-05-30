@@ -1,5 +1,6 @@
 #
 # TODO:
+#   - FHS (at least /usr/coda, /var/coda - assuming that /coda is special)
 #   - separate some programs to coda-common package
 #
 Summary:	Coda distributed filesystem
@@ -123,12 +124,14 @@ narzêdzia do wolumenów.
 
 %build
 touch ChangeLog
-#autoheader
+#%{__autoheader}
 #%{__aclocal}
-cp /usr/share/automake/config.sub configs/
-autoconf
-%configure --enable-crypto
-%{__make} OPTFLAGS="%{rpmcflags}"
+cp -f /usr/share/automake/config.sub configs
+%{__autoconf}
+%configure \
+	--enable-crypto
+%{__make} \
+	OPTFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -137,7 +140,16 @@ install -d $RPM_BUILD_ROOT%{_localstatedir}/%{name}/venus.cache \
 	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d \
 	$RPM_BUILD_ROOT/garbage
 
-%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} exec_prefix=$RPM_BUILD_ROOT${_prefix} libdir=$RPM_BUILD_ROOT%{_libdir} libexecdir=$RPM_BUILD_ROOT${_libexecdir} bindir=$RPM_BUILD_ROOT%{_bindir} sbindir=$RPM_BUILD_ROOT%{_sbindir} mandir=$RPM_BUILD_ROOT%{_mandir} sysconfdir=$RPM_BUILD_ROOT%{_sysconfdir}/%{name} initsuffix=$RPM_BUILD_ROOT/garbage client-install server-install
+%{__make} client-install server-install \
+	prefix=$RPM_BUILD_ROOT%{_prefix} \
+	exec_prefix=$RPM_BUILD_ROOT%{_prefix} \
+	libdir=$RPM_BUILD_ROOT%{_libdir} \
+	libexecdir=$RPM_BUILD_ROOT%{_libexecdir} \
+	bindir=$RPM_BUILD_ROOT%{_bindir} \
+	sbindir=$RPM_BUILD_ROOT%{_sbindir} \
+	mandir=$RPM_BUILD_ROOT%{_mandir} \
+	sysconfdir=$RPM_BUILD_ROOT%{_sysconfdir}/%{name} \
+	initsuffix=$RPM_BUILD_ROOT/garbage
 
 touch $RPM_BUILD_ROOT%{_localstatedir}/%{name}/venus.cache/INIT
 #mknod $RPM_BUILD_ROOT/dev/cfs0 c 67 0
@@ -148,9 +160,9 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/auth2
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/codasrv
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/update
 
-perl -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT/etc/coda/*
+%{__perl} -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT/etc/coda/*
 
-mkdir $RPM_BUILD_ROOT/var/lib/coda/vice -p
+install -d $RPM_BUILD_ROOT/var/lib/coda/vice
 
 %clean
 rm -rf $RPM_BUILD_ROOT
