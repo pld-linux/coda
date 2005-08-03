@@ -6,12 +6,12 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.10
+Version:	6.0.11
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	b2313baa5e5cc535b013648233825a84
+# Source0-md5:	aad65cafc27572287276d0fa355b6164
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
@@ -25,6 +25,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	e2fsprogs-devel >= 1.34
+BuildRequires:	flex
 BuildRequires:	libstdc++-devel
 BuildRequires:	lwp-devel >= 2.0
 BuildRequires:	ncurses-devel
@@ -162,7 +163,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/update
 
 %{__perl} -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT/etc/coda/*
 
-install -d $RPM_BUILD_ROOT/var/lib/coda/vice
+install -d $RPM_BUILD_ROOT/var/lib/coda/vice/{auth2,db,misc,spool,srv,vol}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -324,6 +325,12 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/auth2
 %attr(754,root,root) /etc/rc.d/init.d/update
 %dir /var/lib/coda/vice
+%dir /var/lib/coda/vice/auth2
+%dir /var/lib/coda/vice/db
+%dir /var/lib/coda/vice/misc
+%dir /var/lib/coda/vice/spool
+%dir /var/lib/coda/vice/srv
+%dir /var/lib/coda/vice/spool
 
 %files backup
 %defattr(644,root,root,755)
