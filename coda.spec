@@ -6,12 +6,12 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.11
+Version:	6.0.12
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	aad65cafc27572287276d0fa355b6164
+# Source0-md5:	32200de1d92ae9c61753a7b549c38043
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
@@ -27,10 +27,10 @@ BuildRequires:	db-devel
 BuildRequires:	e2fsprogs-devel >= 1.34
 BuildRequires:	flex
 BuildRequires:	libstdc++-devel
-BuildRequires:	lwp-devel >= 2.0
+BuildRequires:	lwp-devel >= 2.1
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
-BuildRequires:	rpc2-devel
+BuildRequires:	rpc2-devel >= 1.28
 BuildRequires:	rvm-devel
 BuildRequires:	rvm-tools
 Requires:	bc
@@ -285,6 +285,17 @@ fi
 %attr(755,root,root) %{_bindir}/removeinc
 %attr(755,root,root) %{_bindir}/xfrepair
 %attr(755,root,root) %{_bindir}/xaskuser
+%{_mandir}/man1/au.1.gz
+%{_mandir}/man1/cfs.1.gz
+%{_mandir}/man1/clog.1.gz
+%{_mandir}/man1/coda_replay.1.gz
+%{_mandir}/man1/cmon.1.gz
+%{_mandir}/man1/cpasswd.1.gz
+%{_mandir}/man1/ctokens.1.gz
+%{_mandir}/man1/cunlog.1.gz
+%{_mandir}/man1/hoard.1.gz
+%{_mandir}/man1/spy.1.gz
+%{_mandir}/man1/repair.1.gz
 %attr(755,root,root) %{_sbindir}/volmunge
 %attr(755,root,root) %{_sbindir}/sidekick
 %attr(755,root,root) %{_sbindir}/coda-client-logrotate
@@ -294,6 +305,7 @@ fi
 %files server
 %defattr(644,root,root,755)
 %{_sysconfdir}/coda/server.conf.ex
+%attr(755,root,root) %{_sbindir}/codadump2tar
 %attr(755,root,root) %{_sbindir}/startserver
 %attr(755,root,root) %{_sbindir}/partial-reinit.sh
 %attr(755,root,root) %{_sbindir}/createvol_rep
@@ -321,6 +333,35 @@ fi
 %attr(755,root,root) %{_sbindir}/norton
 %attr(755,root,root) %{_sbindir}/norton-reinit
 %attr(755,root,root) %{_bindir}/reinit
+%{_mandir}/man5/backuplogs.5.gz
+%{_mandir}/man5/dumpfile.5.gz
+%{_mandir}/man5/dumplist.5.gz
+%{_mandir}/man5/maxgroupid.5.gz
+%{_mandir}/man5/passwd.coda.5.gz
+%{_mandir}/man5/servers.5.gz
+%{_mandir}/man5/vicetab.5.gz
+%{_mandir}/man5/volumelist.5.gz
+%{_mandir}/man5/vrdb.5.gz
+%{_mandir}/man8/auth2.8.gz
+%{_mandir}/man8/initpw.8.gz
+%{_mandir}/man8/backup.8.gz
+%{_mandir}/man8/bldvldb.sh.8.gz
+%{_mandir}/man8/codasrv.8.gz
+%{_mandir}/man8/createvol_rep.8.gz
+%{_mandir}/man8/merge.8.gz
+%{_mandir}/man8/norton.8.gz
+%{_mandir}/man8/pdbtool.8.gz
+%{_mandir}/man8/purgevol_rep.8.gz
+%{_mandir}/man8/readdump.8.gz
+%{_mandir}/man8/startserver.8.gz
+%{_mandir}/man8/updateclnt.8.gz
+%{_mandir}/man8/updatesrv.8.gz
+%{_mandir}/man8/venus-setup.8.gz
+%{_mandir}/man8/venus.8.gz
+%{_mandir}/man8/vice-setup.8.gz
+%{_mandir}/man8/volmunge.8.gz
+%{_mandir}/man8/volutil.8.gz
+%{_mandir}/man8/vutil.8.gz
 %attr(754,root,root) /etc/rc.d/init.d/codasrv
 %attr(754,root,root) /etc/rc.d/init.d/auth2
 %attr(754,root,root) /etc/rc.d/init.d/update
