@@ -285,17 +285,17 @@ fi
 %attr(755,root,root) %{_bindir}/removeinc
 %attr(755,root,root) %{_bindir}/xfrepair
 %attr(755,root,root) %{_bindir}/xaskuser
-%{_mandir}/man1/au.1.gz
-%{_mandir}/man1/cfs.1.gz
-%{_mandir}/man1/clog.1.gz
-%{_mandir}/man1/coda_replay.1.gz
-%{_mandir}/man1/cmon.1.gz
-%{_mandir}/man1/cpasswd.1.gz
-%{_mandir}/man1/ctokens.1.gz
-%{_mandir}/man1/cunlog.1.gz
-%{_mandir}/man1/hoard.1.gz
-%{_mandir}/man1/spy.1.gz
-%{_mandir}/man1/repair.1.gz
+%{_mandir}/man1/au.1*
+%{_mandir}/man1/cfs.1*
+%{_mandir}/man1/clog.1*
+%{_mandir}/man1/coda_replay.1*
+%{_mandir}/man1/cmon.1*
+%{_mandir}/man1/cpasswd.1*
+%{_mandir}/man1/ctokens.1*
+%{_mandir}/man1/cunlog.1*
+%{_mandir}/man1/hoard.1*
+%{_mandir}/man1/spy.1*
+%{_mandir}/man1/repair.1*
 %attr(755,root,root) %{_sbindir}/volmunge
 %attr(755,root,root) %{_sbindir}/sidekick
 %attr(755,root,root) %{_sbindir}/coda-client-logrotate
@@ -333,35 +333,35 @@ fi
 %attr(755,root,root) %{_sbindir}/norton
 %attr(755,root,root) %{_sbindir}/norton-reinit
 %attr(755,root,root) %{_bindir}/reinit
-%{_mandir}/man5/backuplogs.5.gz
-%{_mandir}/man5/dumpfile.5.gz
-%{_mandir}/man5/dumplist.5.gz
-%{_mandir}/man5/maxgroupid.5.gz
-%{_mandir}/man5/passwd.coda.5.gz
-%{_mandir}/man5/servers.5.gz
-%{_mandir}/man5/vicetab.5.gz
-%{_mandir}/man5/volumelist.5.gz
-%{_mandir}/man5/vrdb.5.gz
-%{_mandir}/man8/auth2.8.gz
-%{_mandir}/man8/initpw.8.gz
-%{_mandir}/man8/backup.8.gz
-%{_mandir}/man8/bldvldb.sh.8.gz
-%{_mandir}/man8/codasrv.8.gz
-%{_mandir}/man8/createvol_rep.8.gz
-%{_mandir}/man8/merge.8.gz
-%{_mandir}/man8/norton.8.gz
-%{_mandir}/man8/pdbtool.8.gz
-%{_mandir}/man8/purgevol_rep.8.gz
-%{_mandir}/man8/readdump.8.gz
-%{_mandir}/man8/startserver.8.gz
-%{_mandir}/man8/updateclnt.8.gz
-%{_mandir}/man8/updatesrv.8.gz
-%{_mandir}/man8/venus-setup.8.gz
-%{_mandir}/man8/venus.8.gz
-%{_mandir}/man8/vice-setup.8.gz
-%{_mandir}/man8/volmunge.8.gz
-%{_mandir}/man8/volutil.8.gz
-%{_mandir}/man8/vutil.8.gz
+%{_mandir}/man5/backuplogs.5*
+%{_mandir}/man5/dumpfile.5*
+%{_mandir}/man5/dumplist.5*
+%{_mandir}/man5/maxgroupid.5*
+%{_mandir}/man5/passwd.coda.5*
+%{_mandir}/man5/servers.5*
+%{_mandir}/man5/vicetab.5*
+%{_mandir}/man5/volumelist.5*
+%{_mandir}/man5/vrdb.5*
+%{_mandir}/man8/auth2.8*
+%{_mandir}/man8/initpw.8*
+%{_mandir}/man8/backup.8*
+%{_mandir}/man8/bldvldb.sh.8*
+%{_mandir}/man8/codasrv.8*
+%{_mandir}/man8/createvol_rep.8*
+%{_mandir}/man8/merge.8*
+%{_mandir}/man8/norton.8*
+%{_mandir}/man8/pdbtool.8*
+%{_mandir}/man8/purgevol_rep.8*
+%{_mandir}/man8/readdump.8*
+%{_mandir}/man8/startserver.8*
+%{_mandir}/man8/updateclnt.8*
+%{_mandir}/man8/updatesrv.8*
+%{_mandir}/man8/venus-setup.8*
+%{_mandir}/man8/venus.8*
+%{_mandir}/man8/vice-setup.8*
+%{_mandir}/man8/volmunge.8*
+%{_mandir}/man8/volutil.8*
+%{_mandir}/man8/vutil.8*
 %attr(754,root,root) /etc/rc.d/init.d/codasrv
 %attr(754,root,root) /etc/rc.d/init.d/auth2
 %attr(754,root,root) /etc/rc.d/init.d/update
