@@ -57,16 +57,16 @@ Group:		Networking/Daemons
 This package contains programs used by server and client.
 
 %description common -l pl
-Ten pakiet zawiera programy u¿ywane przez klienta i serwer systemu plików
-Coda.
+Ten pakiet zawiera programy u¿ywane przez klienta i serwer systemu
+plików Coda.
 
 %package client
 Summary:	Coda client
 Summary(pl):	Klient Cody
 Group:		Networking/Daemons
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	coda-common
+Requires:	rc-scripts
 
 %description client
 This package contains the main client program, the cachemanager Venus.
@@ -89,9 +89,9 @@ aktywno¶ci Cody. Pakiet wymaga Cody w kernelu lub module kernela.
 Summary:	Coda server
 Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	coda-common
+Requires:	rc-scripts
 Requires:	rvm-tools
 
 %description server
