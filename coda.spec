@@ -65,7 +65,7 @@ Summary:	Coda client
 Summary(pl):	Klient Cody
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
-Requires:	coda-common
+Requires:	%{name}-common = %{version}-%{release}
 Requires:	rc-scripts
 
 %description client
@@ -90,7 +90,7 @@ Summary:	Coda server
 Summary(pl):	Serwer Cody
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
-Requires:	coda-common
+Requires:	%{name}-common = %{version}-%{release}
 Requires:	rc-scripts
 Requires:	rvm-tools
 
