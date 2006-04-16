@@ -1,4 +1,3 @@
-#
 # TODO:
 #   - FHS (at least /usr/coda, /var/coda - assuming that /coda is special)
 #   - separate some programs to coda-common package
@@ -31,6 +30,7 @@ BuildRequires:	lwp-devel >= 2.1
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpc2-devel >= 1.28
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	rvm-devel
 BuildRequires:	rvm-tools
 Requires:	bc
@@ -161,7 +161,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/auth2
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/codasrv
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/update
 
-%{__perl} -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT/etc/coda/*
+%{__perl} -pi -e "s!usr/coda!var/lib/coda!" $RPM_BUILD_ROOT%{_sysconfdir}/coda/*
 
 install -d $RPM_BUILD_ROOT/var/lib/coda/vice/{auth2,db,misc,spool,srv,vol}
 
@@ -178,17 +178,13 @@ else
 fi
 
 %post client
-if [ -e /etc/coda/vstab ]; then
+if [ -e %{_sysconfdir}/coda/vstab ]; then
 	touch /var/lib/coda/venus.cache/INIT
 else
 	%{_sbindir}/venus-setup testserver.coda.cs.cmu.edu 40000
 fi
 /sbin/chkconfig --add venus
-if [ -f /var/lock/subsys/venus ]; then
-	/etc/rc.d/init.d/venus restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/venus start\" to start venus." >&2
-fi
+%service venus restart
 
 %preun client
 grep "^coda" /proc/mounts > /dev/null 2>&1
@@ -199,45 +195,29 @@ else
 	exit 0
 fi
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/venus ]; then
-		/etc/rc.d/init.d/venus stop >&2
-	fi
+	%service venus stop
 	/sbin/chkconfig --del venus
 fi
 
 %post server
 /sbin/chkconfig --add auth2
-if [ -f /var/lock/subsys/auth2 ]; then
-	/etc/rc.d/init.d/auth2 restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/auth2 start\" to start auth." >&2
-fi
+%service auth2 restart
+
 /sbin/chkconfig --add update
-if [ -f /var/lock/subsys/update ]; then
-	/etc/rc.d/init.d/update restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/update start\" to start update." >&2
-fi
+%service update restart
+
 /sbin/chkconfig --add codasrv
-if [ -f /var/lock/subsys/codasrv ]; then
-	/etc/rc.d/init.d/codasrv restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/codasrv start\" to start codasrv." >&2
-fi
+%service codasrv restart
 
 %preun server
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/update ]; then
-		/etc/rc.d/init.d/update stop >&2
-	fi
+	%service update stop
 	/sbin/chkconfig --del update
-	if [ -f /var/lock/subsys/auth2 ]; then
-		/etc/rc.d/init.d/auth2 stop >&2
-	fi
+
+	%service auth2 stop
 	/sbin/chkconfig --del auth2
-	if [ -f /var/lock/subsys/codasrv ]; then
-		/etc/rc.d/init.d/codasrv stop >&2
-	fi
+
+	%service codasrv stop
 	/sbin/chkconfig --del codasrv
 fi
 
