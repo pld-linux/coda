@@ -5,12 +5,12 @@
 Summary:	Coda distributed filesystem
 Summary(pl):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.0.12
+Version:	6.1.0
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	32200de1d92ae9c61753a7b549c38043
+# Source0-md5:	04df0c1eb897d489f4a5794127a4cdf3
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
@@ -29,7 +29,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	lwp-devel >= 2.1
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
-BuildRequires:	rpc2-devel >= 1.28
+BuildRequires:	rpc2-devel >= 2.0
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	rvm-devel
 BuildRequires:	rvm-tools
@@ -257,6 +257,8 @@ fi
 %attr(755,root,root) %{_bindir}/cfs
 %attr(755,root,root) %{_bindir}/getvolinfo
 %attr(755,root,root) %{_bindir}/hoard
+%attr(755,root,root) %{_bindir}/mkcodabf
+%attr(755,root,root) %{_bindir}/vcodacon
 %attr(755,root,root) %{_bindir}/spy
 %attr(755,root,root) %{_bindir}/parser
 %attr(755,root,root) %{_bindir}/rvmsizer
@@ -274,6 +276,7 @@ fi
 %{_mandir}/man1/ctokens.1*
 %{_mandir}/man1/cunlog.1*
 %{_mandir}/man1/hoard.1*
+%{_mandir}/man1/mkcodabf.1*
 %{_mandir}/man1/spy.1*
 %{_mandir}/man1/repair.1*
 %attr(755,root,root) %{_sbindir}/volmunge
@@ -285,6 +288,7 @@ fi
 %files server
 %defattr(644,root,root,755)
 %{_sysconfdir}/coda/server.conf.ex
+%attr(755,root,root) %{_sbindir}/asrlauncher
 %attr(755,root,root) %{_sbindir}/codadump2tar
 %attr(755,root,root) %{_sbindir}/startserver
 %attr(755,root,root) %{_sbindir}/partial-reinit.sh
