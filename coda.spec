@@ -3,7 +3,7 @@
 #   - separate some programs to coda-common package
 #
 Summary:	Coda distributed filesystem
-Summary(pl):	Rozproszony system plików Coda
+Summary(pl.UTF-8):   Rozproszony system plikÃ³w Coda
 Name:		coda
 Version:	6.1.0
 Release:	0.1
@@ -42,27 +42,27 @@ this rpm: the client and server and the backup components. Separately
 you must install a kernel module, or have a Coda enabled kernel, and
 you should get the Coda documentation package.
 
-%description -l pl
-Pakiet ¼ród³owy systemu plików Coda. Rpm zawiera trzy pakiety:
-klienta, serwer oraz komponenty do backupu. Nale¿y oddzielnie
-zainstalowaæ modu³ do j±dra (lub mieæ j±dro z obs³ug± Cody), nale¿y
-równie¿ zaopatrzyæ siê w pakiet z dokumentacj± Cody.
+%description -l pl.UTF-8
+Pakiet ÅºrÃ³dÅ‚owy systemu plikÃ³w Coda. Rpm zawiera trzy pakiety:
+klienta, serwer oraz komponenty do backupu. NaleÅ¼y oddzielnie
+zainstalowaÄ‡ moduÅ‚ do jÄ…dra (lub mieÄ‡ jÄ…dro z obsÅ‚ugÄ… Cody), naleÅ¼y
+rÃ³wnieÅ¼ zaopatrzyÄ‡ siÄ™ w pakiet z dokumentacjÄ… Cody.
 
 %package common
 Summary:	Coda filesystem common programs
-Summary(pl):	Wspólne programy dla klienta i serwera systemu plików Coda
+Summary(pl.UTF-8):   WspÃ³lne programy dla klienta i serwera systemu plikÃ³w Coda
 Group:		Networking/Daemons
 
 %description common
 This package contains programs used by server and client.
 
-%description common -l pl
-Ten pakiet zawiera programy u¿ywane przez klienta i serwer systemu
-plików Coda.
+%description common -l pl.UTF-8
+Ten pakiet zawiera programy uÅ¼ywane przez klienta i serwer systemu
+plikÃ³w Coda.
 
 %package client
 Summary:	Coda client
-Summary(pl):	Klient Cody
+Summary(pl.UTF-8):   Klient Cody
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-common = %{version}-%{release}
@@ -78,16 +78,16 @@ kernel-module for your kernel version, or Coda in your kernel, to have
 a complete coda client. Make sure to select the correct C library
 version.
 
-%description client -l pl
-Ten pakiet zawiera g³ównego klienta, zarz±dcê cache Venus. Do³±czone
-s± tak¿e binaria cfs, narzêdzia do logowania, zarz±dzania ACL-ami
-itp., narzêdzia do u¿ywania z laptopami i narzêdzia do naprawiania
-konfliktów. S± tak¿e narzêdzia cmon i codacon do monitorowania
-aktywno¶ci Cody. Pakiet wymaga Cody w kernelu lub module kernela.
+%description client -l pl.UTF-8
+Ten pakiet zawiera gÅ‚Ã³wnego klienta, zarzÄ…dcÄ™ cache Venus. DoÅ‚Ä…czone
+sÄ… takÅ¼e binaria cfs, narzÄ™dzia do logowania, zarzÄ…dzania ACL-ami
+itp., narzÄ™dzia do uÅ¼ywania z laptopami i narzÄ™dzia do naprawiania
+konfliktÃ³w. SÄ… takÅ¼e narzÄ™dzia cmon i codacon do monitorowania
+aktywnoÅ›ci Cody. Pakiet wymaga Cody w kernelu lub module kernela.
 
 %package server
 Summary:	Coda server
-Summary(pl):	Serwer Cody
+Summary(pl.UTF-8):   Serwer Cody
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-common = %{version}-%{release}
@@ -99,23 +99,23 @@ This package contains the fileserver codasrv for the coda filesystem,
 as well as the volume utilities. For highest performance you will need
 a modified kernel with inode system calls.
 
-%description server -l pl
-Ten pakiet zawiera codasrv - serwer systemu plików Coda, oraz
-narzêdzia do wolumenów. Aby osi±gn±æ lepsz± wydajno¶æ, potrzebny jest
-zmodyfikowany kernel z wywo³aniami dotycz±cymi inodów.
+%description server -l pl.UTF-8
+Ten pakiet zawiera codasrv - serwer systemu plikÃ³w Coda, oraz
+narzÄ™dzia do wolumenÃ³w. Aby osiÄ…gnÄ…Ä‡ lepszÄ… wydajnoÅ›Ä‡, potrzebny jest
+zmodyfikowany kernel z wywoÅ‚aniami dotyczÄ…cymi inodÃ³w.
 
 %package backup
 Summary:	Coda backup coordinator
-Summary(pl):	Program do zarz±dzania backupem Cody
+Summary(pl.UTF-8):   Program do zarzÄ…dzania backupem Cody
 Group:		Networking
 
 %description backup
 This package contains the backup software for the coda filesystem, as
 well as the volume utilities.
 
-%description backup -l pl
-Ten pakiet zawiera oprogramowanie do backupu systemu plików Coda oraz
-narzêdzia do wolumenów.
+%description backup -l pl.UTF-8
+Ten pakiet zawiera oprogramowanie do backupu systemu plikÃ³w Coda oraz
+narzÄ™dzia do wolumenÃ³w.
 
 %prep
 %setup -q
