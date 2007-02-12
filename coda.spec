@@ -3,7 +3,7 @@
 #   - separate some programs to coda-common package
 #
 Summary:	Coda distributed filesystem
-Summary(pl.UTF-8):   Rozproszony system plików Coda
+Summary(pl.UTF-8):	Rozproszony system plików Coda
 Name:		coda
 Version:	6.1.0
 Release:	0.1
@@ -50,7 +50,7 @@ również zaopatrzyć się w pakiet z dokumentacją Cody.
 
 %package common
 Summary:	Coda filesystem common programs
-Summary(pl.UTF-8):   Wspólne programy dla klienta i serwera systemu plików Coda
+Summary(pl.UTF-8):	Wspólne programy dla klienta i serwera systemu plików Coda
 Group:		Networking/Daemons
 
 %description common
@@ -62,7 +62,7 @@ plików Coda.
 
 %package client
 Summary:	Coda client
-Summary(pl.UTF-8):   Klient Cody
+Summary(pl.UTF-8):	Klient Cody
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-common = %{version}-%{release}
@@ -87,7 +87,7 @@ aktywności Cody. Pakiet wymaga Cody w kernelu lub module kernela.
 
 %package server
 Summary:	Coda server
-Summary(pl.UTF-8):   Serwer Cody
+Summary(pl.UTF-8):	Serwer Cody
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-common = %{version}-%{release}
@@ -106,7 +106,7 @@ zmodyfikowany kernel z wywołaniami dotyczącymi inodów.
 
 %package backup
 Summary:	Coda backup coordinator
-Summary(pl.UTF-8):   Program do zarządzania backupem Cody
+Summary(pl.UTF-8):	Program do zarządzania backupem Cody
 Group:		Networking
 
 %description backup
