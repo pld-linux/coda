@@ -5,12 +5,12 @@
 Summary:	Coda distributed filesystem
 Summary(pl.UTF-8):	Rozproszony system plików Coda
 Name:		coda
-Version:	6.1.0
+Version:	6.9.5
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.coda.cs.cmu.edu/pub/coda/src/%{name}-%{version}.tar.gz
-# Source0-md5:	04df0c1eb897d489f4a5794127a4cdf3
+# Source0-md5:	23e3cbed0eea41aa9a9dea45df31938b
 Source1:	%{name}.venus.init
 Source2:	%{name}.auth2.init
 Source3:	%{name}.codasrv.init
@@ -120,7 +120,7 @@ narzędzia do wolumenów.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 %patch3 -p1
 
 %build
@@ -141,7 +141,7 @@ install -d $RPM_BUILD_ROOT%{_localstatedir}/%{name}/venus.cache \
 	$RPM_BUILD_ROOT/coda $RPM_BUILD_ROOT/etc/rc.d/init.d \
 	$RPM_BUILD_ROOT/garbage
 
-%{__make} client-install server-install \
+%{__make} install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	exec_prefix=$RPM_BUILD_ROOT%{_prefix} \
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
@@ -225,7 +225,7 @@ fi
 %defattr(644,root,root,755)
 %dir %{_sysconfdir}/coda
 %attr(755,root,root) %{_sbindir}/codaconfedit
-%attr(755,root,root) %{_sbindir}/coda-setup-ports
+#%attr(755,root,root) %{_sbindir}/coda-setup-ports
 %attr(755,root,root) %{_bindir}/rpc2ping
 
 %files client
@@ -238,7 +238,7 @@ fi
 %dir /coda
 %verify() /coda/NOT_REALLY_CODA
 %{_sysconfdir}/coda/venus.conf.ex
-%{_sysconfdir}/coda/sidekick.intr.ex
+#%{_sysconfdir}/coda/sidekick.intr.ex
 %config %{_sysconfdir}/coda/realms
 %attr(755,root,root) %{_sbindir}/codastart
 #%attr(755,root,root) %{_sbindir}/pwdtopdbtool.py
@@ -258,7 +258,7 @@ fi
 %attr(755,root,root) %{_bindir}/getvolinfo
 %attr(755,root,root) %{_bindir}/hoard
 %attr(755,root,root) %{_bindir}/mkcodabf
-%attr(755,root,root) %{_bindir}/vcodacon
+#%attr(755,root,root) %{_bindir}/vcodacon
 %attr(755,root,root) %{_bindir}/spy
 %attr(755,root,root) %{_bindir}/parser
 %attr(755,root,root) %{_bindir}/rvmsizer
@@ -267,6 +267,7 @@ fi
 %attr(755,root,root) %{_bindir}/removeinc
 %attr(755,root,root) %{_bindir}/xfrepair
 %attr(755,root,root) %{_bindir}/xaskuser
+%attr(755,root,root) %{_bindir}/gcodacon
 %{_mandir}/man1/au.1*
 %{_mandir}/man1/cfs.1*
 %{_mandir}/man1/clog.1*
@@ -280,10 +281,10 @@ fi
 %{_mandir}/man1/spy.1*
 %{_mandir}/man1/repair.1*
 %attr(755,root,root) %{_sbindir}/volmunge
-%attr(755,root,root) %{_sbindir}/sidekick
-%attr(755,root,root) %{_sbindir}/coda-client-logrotate
+%attr(755,root,root) %{_sbindir}/tokentool
+#%attr(755,root,root) %{_sbindir}/sidekick
+#%attr(755,root,root) %{_sbindir}/coda-client-logrotate
 %attr(755,root,root) %{_bindir}/mklka
-
 
 %files server
 %defattr(644,root,root,755)
@@ -305,7 +306,7 @@ fi
 %attr(755,root,root) %{_sbindir}/auth2
 %attr(755,root,root) %{_sbindir}/initpw
 %attr(755,root,root) %{_sbindir}/volutil
-%attr(755,root,root) %{_sbindir}/rpc2portmap
+#%attr(755,root,root) %{_sbindir}/rpc2portmap
 %attr(755,root,root) %{_sbindir}/inoder
 %attr(755,root,root) %{_sbindir}/parserecdump
 %attr(755,root,root) %{_sbindir}/codasrv
@@ -355,7 +356,6 @@ fi
 %dir /var/lib/coda/vice/misc
 %dir /var/lib/coda/vice/spool
 %dir /var/lib/coda/vice/srv
-%dir /var/lib/coda/vice/spool
 
 %files backup
 %defattr(644,root,root,755)
